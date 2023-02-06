@@ -5,6 +5,10 @@ import Navigation from './components/Navigation';
 import PopularResorts from './components/PopularResorts';
 
 class App extends React.Component {
+  state = {
+    resorts: []
+  };
+
   render() {
     return (
       <div className="App">
