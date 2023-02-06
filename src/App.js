@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import Header from './components/Header';
 import Navigation from './components/Navigation';
 import PopularResorts from './components/PopularResorts';
