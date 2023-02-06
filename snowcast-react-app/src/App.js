@@ -10,6 +10,14 @@ class App extends React.Component {
     snowFallData: null
   };
 
+  componentDidMount() {
+    this.getLatLon(this.state.popularResorts[0])
+      .then(({lat, lon}) => this.getResortSnowFall(this.state.popularResorts[0] ,lat, lon))
+      .then(newSnowFallData => this.setState({
+        snowFallData: newSnowFallData
+      }));
+  }
+
   getLatLon = async resortName => {
     const openCageApiKey = process.env.REACT_APP_OPEN_CAGE_API_KEY;
     const requestUrl = `https://api.opencagedata.com/geocode/v1/json?q=${resortName}&key=${openCageApiKey}&limit=1`;
@@ -24,7 +32,7 @@ class App extends React.Component {
     return { lat, lon };
   }
 
-  getResortSnowFall = async (lat, lon) => {
+  getResortSnowFall = async (resortName, lat, lon) => {
     const openWeatherApiKey = process.env.REACT_APP_OPEN_WEATHER_API_KEY;
 
     const requestUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${openWeatherApiKey}&units=metric`;
@@ -37,14 +45,15 @@ class App extends React.Component {
     
     const newSnowFallData = data.hourly
       .filter(hourlyData => hourlyData.weather[0].main === 'Snow')
+      .reduce((snowNext24Hours, hourlyForecast) => {
+        snowNext24Hours.snowFall += hourlyForecast.snow['1h'];
+        return snowNext24Hours;
+      }, { resortName: resortName, snowFall: 0 })
 
-    return newSnowFallData;
-  }
-
-  updateSnowFallData = newSnowFallData => {
-    this.setState({
-      snowFallData: newSnowFallData
-    });
+    return {
+      ...newSnowFallData,
+      currentTemp: data.current.temp
+    };
   }
 
   render() {
@@ -56,7 +65,6 @@ class App extends React.Component {
           popularResorts={this.state.popularResorts}
           getLatLon={this.getLatLon}
           getResortSnowFall={this.getResortSnowFall}
-          updateSnowFallData={this.updateSnowFallData}
         />
       </div>
     );
