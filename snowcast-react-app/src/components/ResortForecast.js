@@ -1,12 +1,17 @@
+import Resort from '../components/Resort';
+
 function ResortForecast({ resortClicked }) {
-  const { resortName, country, snowFallToday, currentTemp } = resortClicked;
+  const { resortName, country, snowFallToday, currentTemp, iconCode } = resortClicked;
   
   return (
     <div className="ResortForecast">
-        <p className="name">{resortName}</p>
-        <p className="country">{country}</p>
-        <p className="snowfall-today">Snowfall (next 24h): {snowFallToday}mm</p>
-        <p className="current-temp">Current Temperature: {currentTemp} &deg;C</p>
+        <Resort
+          resortName={resortName}
+          country={country}
+          snowFallToday={snowFallToday}
+          currentTemp={currentTemp}
+          iconCode={iconCode}
+        />
     </div>
   );
 }
