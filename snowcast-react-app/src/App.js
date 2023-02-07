@@ -89,7 +89,8 @@ class App extends React.Component {
     return {
       ...newSnowFallData,
       currentTemp: data.current.temp,
-      country: country
+      country: country,
+      iconCode: data.current.weather[0].icon
     };
   }
 
