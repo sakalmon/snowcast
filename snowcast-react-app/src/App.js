@@ -63,8 +63,7 @@ class App extends React.Component {
         <Navigation />
         <PopularResorts
           popularResorts={this.state.popularResorts}
-          getLatLon={this.getLatLon}
-          getResortSnowFall={this.getResortSnowFall}
+          snowFallData={this.state.snowFallData}
         />
       </div>
     );

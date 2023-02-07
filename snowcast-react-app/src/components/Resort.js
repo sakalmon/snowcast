@@ -1,12 +1,10 @@
-function Resort() {
+function Resort({ popularResorts, snowFallData }) {
   return (
     <div className="Resort">
-      <div className="resort">
-        <p className="name">Alberta</p>
+        <p className="name">{popularResorts[0]}</p>
         <p className="country">Canada</p>
-        <p className="snowfall-today">0mm</p>
-        <p className="current-temp">0&deg;C</p>
-      </div>
+        <p className="snowfall-today">{snowFallData?.snowFall}</p>
+        <p className="current-temp">{snowFallData?.currentTemp} &deg;C</p>
     </div>
   );
 }
