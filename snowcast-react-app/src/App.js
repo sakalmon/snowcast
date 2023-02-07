@@ -77,6 +77,7 @@ class App extends React.Component {
         return snowNext24Hours;
       }, { resortName: resortName, snowFall: 0 })
 
+      newSnowFallData.snowFall = newSnowFallData.snowFall.toFixed(2);
       // console.log({
       //   ...newSnowFallData,
       //   currentTemp: data.current.temp,
