@@ -8,9 +8,14 @@ function Resort(props) {
 
   return (
     <div className="Resort" onClick={() => handleClick(props)}>
-      <section className="forecast-details">
+      <div className="name-country">
         <p className="name">{resortName}</p>
         <p className="country">{country}</p>
+      </div>
+      <section className="weather-icon">
+        <img src={iconLink} alt="" />
+      </section>
+      <section className="forecast-details">
         <div className="snow-temp">
           <div className="snow">
             <img className="snow-icon" src={snowIcon} alt="" /><span>{snowFallToday}mm</span>
@@ -19,9 +24,6 @@ function Resort(props) {
             <img className="temp-icon" src={temperatureIcon} alt="" /><span>{currentTemp} &deg;C</span>
           </div>
         </div>        
-      </section>
-      <section className="weather-icon">
-        <img src={iconLink} alt="" />
       </section>
     </div>
   );
