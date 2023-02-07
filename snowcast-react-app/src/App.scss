@@ -1,17 +1,72 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: white;
+}
+
+.Header {
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  gap: 20px;
+
+  .logo {
+    width: 50px;
+    height: 50px;
+  }
+
+  .title {
+    color: rgb(143, 221, 252);
+  }
+}
+
 .Navigation {
   display: flex;
   justify-content: space-between;
   margin: 30px 0;
+  background-color: lightskyblue;
+  padding: 0.75rem;
+  
+  a {
+    text-decoration: none;
+    color: white;
+  }
+
+  .user-nav {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
 }
 
 .PopularResorts {
-  display: flex;
-  justify-content: flex-start;
-  gap: 50px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.25rem;
+  margin: 1.5rem 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem;
+
+  // display: flex;
+  // justify-content: flex-start;
+  // gap: 50px;
+  // background-image: url('../public/snow-wallpaper.jpg');
+  // background-size: cover;
+  // background-repeat: no-repeat;
+  // height: 1000px;
 
   .Resort {
+    border: 1px solid skyblue;
+    border-radius: 5px;
+    padding: 1rem;
+
     p {
       margin: 0;
     }
+
   }
 }
