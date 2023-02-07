@@ -3,11 +3,13 @@ import React from 'react';
 import Header from './components/Header';
 import Navigation from './components/Navigation';
 import PopularResorts from './components/PopularResorts';
+import ResortForecast from './components/ResortForecast';
 
 class App extends React.Component {
   state = {
     popularResorts: ['Lake Louise Ski Resort', 'Aspen Ski Resort', 'Niseko Ski Resort', 'Yongpyeong Resort', 'Lenzerheide-Valbella', 'Whistler Blackcomb'],
-    snowFallData: []
+    snowFallData: [],
+    resortClicked: null
   };
 
   componentDidMount() {
@@ -91,14 +93,28 @@ class App extends React.Component {
     };
   }
 
+  handleClick = resortObj => {
+    this.setState({
+      resortClicked: resortObj
+    });
+  }
+
+  goHome = () => {
+    this.setState({
+      resortClicked: null
+    });
+  }
+
   render() {
     return (
       <div className="App">
         <Header />
-        <Navigation />
-        <PopularResorts
-          snowFallData={this.state.snowFallData}
-        />
+        <Navigation goHome={this.goHome} />
+        {!this.state.resortClicked ? 
+          <PopularResorts 
+            snowFallData={this.state.snowFallData}
+            handleClick={this.handleClick} /> : 
+            <ResortForecast resortClicked={this.state.resortClicked}/>}
       </div>
     );
   }

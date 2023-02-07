@@ -1,6 +1,6 @@
 import Resort from './Resort';
 
-function PopularResorts({ snowFallData }) {
+function PopularResorts({ snowFallData, handleClick }) {
   // getLatLon(popularResorts[0])
   //   .then(({lat, lon}) => getResortSnowFall(lat, lon))
   //   .then(newSnowFallData => updateSnowFallData(newSnowFallData));
@@ -14,6 +14,7 @@ function PopularResorts({ snowFallData }) {
           country={forecast.country}
           snowFallToday={forecast.snowFall}
           currentTemp={forecast.currentTemp}
+          handleClick={handleClick}
         />
       )}
     </div>

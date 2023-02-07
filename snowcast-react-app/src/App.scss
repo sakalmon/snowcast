@@ -26,19 +26,26 @@ body {
 .Navigation {
   display: flex;
   justify-content: space-between;
-  margin: 30px 0;
   background-color: lightskyblue;
   padding: 0.75rem;
   
-  a {
+  .link {
     text-decoration: none;
     color: white;
+  }
+
+  .link:hover {
+    cursor: pointer;
   }
 
   .user-nav {
     display: flex;
     justify-content: flex-end;
     gap: 1rem;
+  }
+
+  p {
+    margin: 0;
   }
 }
 

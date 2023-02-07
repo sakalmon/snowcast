@@ -1,8 +1,8 @@
-function Resort(props) {
-  const { resortName, country, snowFallToday, currentTemp, handleClick } = props;
-
+function ResortForecast({ resortClicked }) {
+  const { resortName, country, snowFallToday, currentTemp } = resortClicked;
+  
   return (
-    <div className="Resort" onClick={() => handleClick(props)}>
+    <div className="ResortForecast">
         <p className="name">{resortName}</p>
         <p className="country">{country}</p>
         <p className="snowfall-today">Snowfall (next 24h): {snowFallToday}mm</p>
@@ -11,4 +11,4 @@ function Resort(props) {
   );
 }
 
-export default Resort;
+export default ResortForecast;

@@ -1,12 +1,12 @@
-function Navigation() {
+function Navigation({ goHome }) {
   return (
     <div className="Navigation">
       <div className="page-nav">
-        <a href="#">Popular Resorts</a>
+        <p className="link" onClick={goHome}>Popular Resorts</p>
       </div>
       <div className="user-nav">
-        <a href="#">Sign Up</a>
-        <a href="#">Login</a>
+        <p className="link">Sign Up</p>
+        <p className="link">Login</p>
       </div>
     </div>
   );
