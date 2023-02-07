@@ -12,14 +12,33 @@ class App extends React.Component {
 
   componentDidMount() {
     console.log('Component mounted');
-    this.state.popularResorts.forEach(resort => {
+    
+    this.state.popularResorts.forEach(resort => {    
       console.log(`Getting data for ${resort}`);
-      this.getLatLonCountry(resort)
+      const snowFallData = this.getLatLonCountry(resort)
         .then(({lat, lon, country}) => this.getResortSnowFall(resort, lat, lon, country))
-        .then(newSnowFallData => this.setState({
-          snowFallData: [...this.state.snowFallData, newSnowFallData]
-        }));
+        .then(newSnowFallData => {
+          if (!this.checkIfDuplicate(newSnowFallData)) {
+            this.setState({
+              snowFallData: [...this.state.snowFallData, newSnowFallData]
+            });
+          }
+        });
+
+      console.log(snowFallData);
     });
+  }
+
+  checkIfDuplicate = snowFallData => {
+    let duplicate = false;
+
+    this.state.snowFallData.forEach(stateData => {
+      if (stateData.resortName === snowFallData.resortName) {
+        duplicate = true;
+      }
+    });
+
+    return duplicate;
   }
 
   getLatLonCountry = async resortName => {
@@ -58,11 +77,11 @@ class App extends React.Component {
         return snowNext24Hours;
       }, { resortName: resortName, snowFall: 0 })
 
-      console.log({
-        ...newSnowFallData,
-        currentTemp: data.current.temp,
-        country: country
-      })
+      // console.log({
+      //   ...newSnowFallData,
+      //   currentTemp: data.current.temp,
+      //   country: country
+      // })
 
     return {
       ...newSnowFallData,
