@@ -6,43 +6,51 @@ import PopularResorts from './components/PopularResorts';
 
 class App extends React.Component {
   state = {
-    popularResorts: ['Lake Louise Ski Resort'],
-    snowFallData: null
+    popularResorts: ['Lake Louise Ski Resort', 'Aspen Ski Resort'],
+    snowFallData: []
   };
 
   componentDidMount() {
-    this.getLatLon(this.state.popularResorts[0])
-      .then(({lat, lon}) => this.getResortSnowFall(this.state.popularResorts[0] ,lat, lon))
-      .then(newSnowFallData => this.setState({
-        snowFallData: newSnowFallData
-      }));
+    console.log('Component mounted');
+    this.state.popularResorts.forEach(resort => {
+      console.log(`Getting data for ${resort}`);
+      this.getLatLonCountry(resort)
+        .then(({lat, lon, country}) => this.getResortSnowFall(resort, lat, lon, country))
+        .then(newSnowFallData => this.setState({
+          snowFallData: [...this.state.snowFallData, newSnowFallData]
+        }));
+    });
   }
 
-  getLatLon = async resortName => {
+  getLatLonCountry = async resortName => {
     const openCageApiKey = process.env.REACT_APP_OPEN_CAGE_API_KEY;
     const requestUrl = `https://api.opencagedata.com/geocode/v1/json?q=${resortName}&key=${openCageApiKey}&limit=1`;
 
-    // const res = await fetch(requestUrl);
-    // const data = await res.json();
-    // const lat = data.results[0].geometry.lat;
-    const lat = 51.413042;
-    // const lon = data.results[0].geometry.lng;
-    const lon = -116.140320;
-
-    return { lat, lon };
+    console.log('Fetching from Open Cage API');
+    const res = await fetch(requestUrl);
+    const data = await res.json();
+    const lat = data.results[0].geometry.lat;
+    const lon = data.results[0].geometry.lng;
+    const country = data.results[0].components.country;
+    
+    // const lat = 51.413042;
+    // const lon = -116.140320;
+    // const country = 'Canada';
+    console.log(lat, lon, country)
+    return { lat, lon, country };
   }
 
-  getResortSnowFall = async (resortName, lat, lon) => {
+  getResortSnowFall = async (resortName, lat, lon, country) => {
     const openWeatherApiKey = process.env.REACT_APP_OPEN_WEATHER_API_KEY;
 
     const requestUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${openWeatherApiKey}&units=metric`;
 
-    // const res = await fetch(requestUrl);
+    console.log('Fetching from Open Weather API');
+    // const res = await fetch('/sample_data');
     // const data = await res.json();
-
-    const res = await fetch('/sample_data');
+    const res = await fetch(requestUrl);
     const data = await res.json();
-    
+
     const newSnowFallData = data.hourly
       .filter(hourlyData => hourlyData.weather[0].main === 'Snow')
       .reduce((snowNext24Hours, hourlyForecast) => {
@@ -50,9 +58,16 @@ class App extends React.Component {
         return snowNext24Hours;
       }, { resortName: resortName, snowFall: 0 })
 
+      console.log({
+        ...newSnowFallData,
+        currentTemp: data.current.temp,
+        country: country
+      })
+
     return {
       ...newSnowFallData,
-      currentTemp: data.current.temp
+      currentTemp: data.current.temp,
+      country: country
     };
   }
 
@@ -62,7 +77,6 @@ class App extends React.Component {
         <Header />
         <Navigation />
         <PopularResorts
-          popularResorts={this.state.popularResorts}
           snowFallData={this.state.snowFallData}
         />
       </div>
