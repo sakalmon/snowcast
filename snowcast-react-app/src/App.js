@@ -109,7 +109,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Header />
+        <Header goHome={this.goHome}/>
         <Navigation goHome={this.goHome} />
         {!this.state.resortClicked ? 
           <PopularResorts 

@@ -22,6 +22,10 @@ body {
   .title {
     color: rgb(143, 221, 252);
   }
+
+  .logo:hover, .title:hover {
+    cursor: pointer;
+  }
 }
 
 .Navigation {
@@ -71,20 +75,7 @@ body {
       margin: 0;
     }
 
-    .name-country {
-      display: flex;
-      justify-content: space-between;
-      background-image: linear-gradient(to right, lightskyblue, rgb(200, 234, 255));
-      padding: 1rem 1rem;
-      border-top-left-radius: 1px;
-      border-top-right-radius: 1px;
-      margin: -1rem -1rem 0 -1rem;
-      color: white;
-
-      .country {
-        color: rgb(107, 193, 247);
-      }
-    }
+    
 
     .weather-icon {
       display: flex;
@@ -142,27 +133,33 @@ body {
     }
   }
 
-  .name-country {
-    display: flex;
-    justify-content: space-between;
-    background-image: linear-gradient(to right, lightskyblue, rgb(200, 234, 255));
-    padding: 1rem 1rem;
-    border-top-left-radius: 1px;
-    border-top-right-radius: 1px;
-    margin: -1rem -1rem 0 -1rem;
-    color: white;
-
-    p {
-      margin: 0;
-    }
-
-    .country {
-      color: lightskyblue;
-    }
-  }
-
   .weather-icon {
     display: flex;
     justify-content: center;
   }
+}
+
+.name-country {
+  display: flex;
+  justify-content: space-between;
+  background-image: linear-gradient(to right, lightskyblue, rgb(200, 234, 255));
+  padding: 1rem 1rem;
+  border-top-left-radius: 1px;
+  border-top-right-radius: 1px;
+  margin: -1rem -1rem 0 -1rem;
+  color: white;
+
+  .country {
+    color: rgb(107, 193, 247);
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.temp-num-unit, .snow-num-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
