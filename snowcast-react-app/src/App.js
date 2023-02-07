@@ -6,7 +6,7 @@ import PopularResorts from './components/PopularResorts';
 
 class App extends React.Component {
   state = {
-    popularResorts: ['Lake Louise Ski Resort', 'Aspen Ski Resort'],
+    popularResorts: ['Lake Louise Ski Resort', 'Aspen Ski Resort', 'Niseko Ski Resort', 'Yongpyeong Resort', 'Lenzerheide-Valbella', 'Whistler Blackcomb'],
     snowFallData: []
   };
 
