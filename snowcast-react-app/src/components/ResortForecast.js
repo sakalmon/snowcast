@@ -1,7 +1,7 @@
 import Resort from '../components/Resort';
 
 function ResortForecast({ resortClicked }) {
-  const { resortName, country, snowFallToday, currentTemp, iconCode } = resortClicked;
+  const { resortName, country, snowFallToday, currentTemp, iconCode, hourlySnowFall } = resortClicked;
   
   return (
     <div className="ResortForecast">
@@ -12,6 +12,19 @@ function ResortForecast({ resortClicked }) {
           currentTemp={currentTemp}
           iconCode={iconCode}
         />
+        <section className="hourly-snowfall">
+          <p>Snowfall Per Hour</p>
+          <div className="each-hour-container">
+            {hourlySnowFall.map((hourSnowFall, index) => {
+              return (
+                <div key={index} className="each-hour">
+                  <p>{index}</p>
+                  <p>{hourSnowFall}</p>
+                </div>
+              );
+            })}
+          </div>
+        </section>
     </div>
   );
 }

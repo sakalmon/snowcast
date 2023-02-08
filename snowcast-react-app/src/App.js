@@ -86,11 +86,22 @@ class App extends React.Component {
       //   country: country
       // })
 
+      const hourlySnowFall = data.hourly.map(hourForecast => {
+        if (hourForecast.snow) {
+          return hourForecast.snow['1h'];
+        } else {
+          return 0;
+        }
+      }).slice(0, 24);
+        
+      console.log(hourlySnowFall);
+
     return {
       ...newSnowFallData,
       currentTemp: data.current.temp,
       country: country,
-      iconCode: data.current.weather[0].icon
+      iconCode: data.current.weather[0].icon,
+      hourlySnowFall: hourlySnowFall
     };
   }
 

@@ -16,6 +16,7 @@ function PopularResorts({ snowFallData, handleClick }) {
           currentTemp={forecast.currentTemp}
           handleClick={handleClick}
           iconCode={forecast.iconCode}
+          hourlySnowFall={forecast.hourlySnowFall}
         />
       )}
     </div>
