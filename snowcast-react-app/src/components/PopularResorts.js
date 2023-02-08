@@ -3,7 +3,7 @@ import Resort from './Resort';
 
 function PopularResorts() {
   const [snowFallData, setSnowFallData] = useState([]);
-  const [resortClicked, setResortClicked] = useState(false);
+  const fetched = [];
 
   const getPopularSnowFall = () => {
     const popularResorts = [
@@ -17,15 +17,17 @@ function PopularResorts() {
 
     popularResorts.forEach(resort => {    
       console.log(`Getting data for ${resort}`);
-      const snowFallData = getLatLonCountry(resort)
-        .then(({lat, lon, country}) => getResortSnowFall(resort, lat, lon, country))
-        .then(newSnowFallData => {
-          console.log('New: ' + snowFallData);
-          if (!checkIfDuplicate(newSnowFallData)) {
-            setSnowFallData(oldSnowFallData => [...oldSnowFallData, newSnowFallData]);
-          }
-        });
-      console.log(snowFallData);
+      
+      if (!(fetched.includes(resort))) {
+        console.log(fetched)
+        fetched.push(resort);
+        console.log(fetched)
+        getLatLonCountry(resort)
+          .then(({lat, lon, country}) => getResortSnowFall(resort, lat, lon, country))
+          .then(newSnowFallData => {
+              setSnowFallData(oldSnowFallData => [...oldSnowFallData, newSnowFallData]);              
+          });
+      }      
     });
   };
 
@@ -40,7 +42,6 @@ function PopularResorts() {
     const lon = data.results[0].geometry.lng;
     const country = data.results[0].components.country;
     
-    console.log(lat, lon, country);
     return { lat, lon, country };
   };
 
@@ -50,8 +51,6 @@ function PopularResorts() {
     const requestUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${openWeatherApiKey}&units=metric`;
 
     console.log('Fetching from Open Weather API');
-    // const res = await fetch('/sample_data');
-    // const data = await res.json();
     const res = await fetch(requestUrl);
     const data = await res.json();
 
@@ -75,8 +74,6 @@ function PopularResorts() {
       }
     }).slice(0, 24);
       
-    console.log(hourlySnowFall);
-
     return {
       ...newSnowFallData,
       currentTemp: data.current.temp,
@@ -86,21 +83,24 @@ function PopularResorts() {
     };
   };
 
-  const checkIfDuplicate = newSnowFallData => {
-    let duplicate = false;
+  // const checkIfDuplicate = newSnowFallData => {
+  //   let duplicate = false;
 
-    snowFallData.forEach(stateData => {
-      if (stateData.resortName === newSnowFallData.resortName) {
-        duplicate = true;
-      }
-    });
+  //   console.log('state data:')
+  //   console.log(snowFallData)
+  //   console.log('========')
+  //   console.log('new data:')
+  //   console.log(newSnowFallData)
 
-    return duplicate;
-  };
+  //   snowFallData.forEach(stateData => {      
+  //     if (stateData.resortName === newSnowFallData.resortName) {
+  //       duplicate = true;
+  //     }
+  //   });
 
-  const handleClick = resortObj => {
-    setResortClicked(true);
-  };
+  //   console.log(duplicate)
+  //   return duplicate;
+  // };
 
   useEffect(getPopularSnowFall, []);
 
@@ -113,7 +113,6 @@ function PopularResorts() {
           country={forecast.country}
           snowFallToday={forecast.snowFall}
           currentTemp={forecast.currentTemp}
-          handleClick={handleClick}
           iconCode={forecast.iconCode}
           hourlySnowFall={forecast.hourlySnowFall}
         />
