@@ -13,7 +13,7 @@ function ResortForecast({ resortClicked }) {
           iconCode={iconCode}
         />
         <section className="hourly-snowfall">
-          <p>Snowfall Per Hour</p>
+          <p>Snowfall Per Hour (mm)</p>
           <div className="each-hour-container">
             {hourlySnowFall.map((hourSnowFall, index) => {
               return (

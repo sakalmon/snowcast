@@ -52,6 +52,11 @@ body {
   p {
     margin: 0;
   }
+  
+  .page-nav {
+    display: flex;
+    gap: 1.5rem;
+  }
 }
 
 .PopularResorts {

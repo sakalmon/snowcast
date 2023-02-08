@@ -85,7 +85,7 @@ class App extends React.Component {
         if (hourlyForecast.snow) {
           snowNext24Hours.snowFall += hourlyForecast.snow['1h'];
         }
-        
+
         return snowNext24Hours;
       }, { resortName: resortName, snowFall: 0 });
 
@@ -138,6 +138,7 @@ class App extends React.Component {
             handleClick={this.handleClick} /> : 
             <ResortForecast resortClicked={this.state.resortClicked}/>}
       </div>
+
     );
   }
 }
