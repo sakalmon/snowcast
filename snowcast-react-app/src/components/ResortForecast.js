@@ -1,7 +1,10 @@
 import Resort from '../components/Resort';
+import { useLocation } from 'react-router-dom';
 
-function ResortForecast({ resortClicked }) {
-  const { resortName, country, snowFallToday, currentTemp, iconCode, hourlySnowFall } = resortClicked;
+function ResortForecast() {
+  const location = useLocation();
+  const { clickedResort } = location.state;
+  const { resortName, country, snowFallToday, currentTemp, iconCode, hourlySnowFall } = clickedResort;
   
   return (
     <div className="ResortForecast">

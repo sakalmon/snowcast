@@ -83,25 +83,6 @@ function PopularResorts() {
     };
   };
 
-  // const checkIfDuplicate = newSnowFallData => {
-  //   let duplicate = false;
-
-  //   console.log('state data:')
-  //   console.log(snowFallData)
-  //   console.log('========')
-  //   console.log('new data:')
-  //   console.log(newSnowFallData)
-
-  //   snowFallData.forEach(stateData => {      
-  //     if (stateData.resortName === newSnowFallData.resortName) {
-  //       duplicate = true;
-  //     }
-  //   });
-
-  //   console.log(duplicate)
-  //   return duplicate;
-  // };
-
   useEffect(getPopularSnowFall, []);
 
   return (
