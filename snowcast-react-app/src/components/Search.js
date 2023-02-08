@@ -62,6 +62,8 @@ function Search() {
   const handleContentChange = event => setSearchQuery(event.target.value);
 
   const getSearchResults = async query => {
+    document.querySelectorAll('.SearchResult').forEach(element => element.remove())
+
     const openCageApiKey = process.env.REACT_APP_OPEN_CAGE_API_KEY;
     const requestUrl = `https://api.opencagedata.com/geocode/v1/json?q=${query}&key=${openCageApiKey}&limit=10`;
 
@@ -70,7 +72,6 @@ function Search() {
     const data = await res.json();
     
     const newResults = data.results.map(apiResult => {
-      // const formattedName = `${apiResult.components.village} ${apiResult.components.state_code} - ${apiResult.components.country}`;
       return {
         formattedName: apiResult.formatted,
         lat: apiResult.geometry.lat,
