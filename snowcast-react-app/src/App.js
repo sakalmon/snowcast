@@ -72,29 +72,39 @@ class App extends React.Component {
     const res = await fetch(requestUrl);
     const data = await res.json();
 
+    // const newSnowFallData = data.hourly
+    //   .filter(hourlyData => hourlyData.weather[0].main === 'Snow')
+    //   .reduce((snowNext24Hours, hourlyForecast) => {
+    //     snowNext24Hours.snowFall += hourlyForecast.snow['1h'];
+    //     return snowNext24Hours;
+    //   }, { resortName: resortName, snowFall: 0 });
+
     const newSnowFallData = data.hourly
-      .filter(hourlyData => hourlyData.weather[0].main === 'Snow')
+      .slice(0, 24)
       .reduce((snowNext24Hours, hourlyForecast) => {
-        snowNext24Hours.snowFall += hourlyForecast.snow['1h'];
-        return snowNext24Hours;
-      }, { resortName: resortName, snowFall: 0 })
-
-      newSnowFallData.snowFall = newSnowFallData.snowFall.toFixed(2);
-      // console.log({
-      //   ...newSnowFallData,
-      //   currentTemp: data.current.temp,
-      //   country: country
-      // })
-
-      const hourlySnowFall = data.hourly.map(hourForecast => {
-        if (hourForecast.snow) {
-          return hourForecast.snow['1h'];
-        } else {
-          return 0;
+        if (hourlyForecast.snow) {
+          snowNext24Hours.snowFall += hourlyForecast.snow['1h'];
         }
-      }).slice(0, 24);
         
-      console.log(hourlySnowFall);
+        return snowNext24Hours;
+      }, { resortName: resortName, snowFall: 0 });
+
+    newSnowFallData.snowFall = newSnowFallData.snowFall.toFixed(2);
+    // console.log({
+    //   ...newSnowFallData,
+    //   currentTemp: data.current.temp,
+    //   country: country
+    // })
+
+    const hourlySnowFall = data.hourly.map(hourForecast => {
+      if (hourForecast.snow) {
+        return hourForecast.snow['1h'];
+      } else {
+        return 0;
+      }
+    }).slice(0, 24);
+      
+    console.log(hourlySnowFall);
 
     return {
       ...newSnowFallData,
