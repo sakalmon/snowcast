@@ -1,8 +1,11 @@
-function Navigation({ goHome }) {
+import { Link } from 'react-router-dom';
+
+function Navigation() {
   return (
     <div className="Navigation">
       <div className="page-nav">
-        <p className="link" onClick={goHome}>Popular Resorts</p>
+        <Link to='/'>Popular Resorts</Link>
+        <Link to='/search'>Search</Link>
       </div>
       <div className="user-nav">
         <p className="link">Sign Up</p>

@@ -33,12 +33,12 @@ body {
   justify-content: space-between;
   background-color: lightskyblue;
   padding: 0.75rem;
-  
-  .link {
+
+  a, .link {
     text-decoration: none;
     color: white;
   }
-
+  
   .link:hover {
     cursor: pointer;
   }
@@ -79,8 +79,6 @@ body {
     p {
       margin: 0;
     }
-
-    
 
     .weather-icon {
       display: flex;
