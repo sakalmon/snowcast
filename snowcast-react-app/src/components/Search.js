@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import SearchResult from './SearchResult';
+import '../assets/stylesheets/Search.scss';
 
 function Search() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -85,13 +86,22 @@ function Search() {
     setSearchResults(newResults);
   }
 
-  useEffect(getSearchedSnowFall, [searchResults])
+  useEffect(getSearchedSnowFall, [searchResults]);
+
+  const handleInputClick = event => {
+    const inputDOM = event.target;
+    inputDOM.value = '';
+    inputDOM.style.color = 'black';
+  }
 
   return (
     <div className="Search">
-      <h1>Search for a ski resort</h1>
-      <input type="text" onChange={handleContentChange}/>
-      <button onClick={() => getSearchResults(searchQuery)}>Search</button>
+      <div className="search-box">
+        <form onSubmit={event => event.preventDefault()}>
+          <input type="text" onChange={handleContentChange} value={searchQuery || "Search Ski Resorts"} style={{color:'grey'}} onClick={handleInputClick} />
+          <button onClick={() => getSearchResults(searchQuery)}>Search</button>
+        </form>
+      </div>
       {searchedSnowFallData.map((resort, index) => {
         console.log('Resort:')
         console.log(resort)
