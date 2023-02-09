@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import '../assets/stylesheets/Header.scss';
 
 function Header({ goHome }) {
   return (
