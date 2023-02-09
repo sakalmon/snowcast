@@ -1,0 +1,31 @@
+* {
+  // border: 1px solid red;
+}
+.search-results {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 400px;
+  margin: 0 auto;
+  position: relative;
+  top: -1.5rem;
+  left: -1.75rem;
+  border-left: 2px solid grey;
+  border-right: 2px solid grey;
+  border-bottom: 2px solid grey;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+
+  .SearchResult {
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid lightgrey;
+    padding: 0 1rem;
+  }
+
+  .SearchResult:hover {
+    background-color: lightskyblue;
+  }
+}

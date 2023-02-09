@@ -9,13 +9,20 @@
 }
 
 input {
-  width: 300px;
+  width: 400px;
   height: 3rem;
   border-radius: 25px;
   font-size: 1.5rem;
   padding: 0 1rem;
   padding: 0 1rem 0 3rem;
   text-align: center;
+  border-style: solid;
+  margin-bottom: 0.25rem;
+  border-bottom: none;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  outline: none;
+  text-indent: -2.5rem;
 }
 
 button {

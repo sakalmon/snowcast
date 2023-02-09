@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import SearchResult from './SearchResult';
 import '../assets/stylesheets/Search.scss';
+import '../assets/stylesheets/SearchResult.scss';
 
 function Search({ hideResorts }) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -104,11 +105,13 @@ function Search({ hideResorts }) {
           <button onClick={() => getSearchResults(searchQuery)}>Search</button>
         </form>
       </div>
-      {searchedSnowFallData.map((resort, index) => {
-        console.log('Resort:')
-        console.log(resort)
-        return <SearchResult key={index} result={resort} />
-      })}
+      <div className="search-results">
+        {searchedSnowFallData.map((resort, index) => {
+          console.log('Resort:')
+          console.log(resort)
+          return <SearchResult key={index} result={resort} />
+        })}
+      </div>
     </div>
   );
 }
