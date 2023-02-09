@@ -1,7 +1,7 @@
 # Snowcast
 A web application that allows users to see the day's snowfall forecast at popular ski resorts as well as search for others.
 ## [Try out Snowcast!](http://snowcast.co)
-![App Screenshot]()
+![App Screenshot](https://github.com/sakalmon/snowcast/blob/main/App%20Screenshot.png?raw=true)
 ## :blue_book: Plan for developing the app
 ### 1. User stories
 * I'm a person who wants to travel and snowboard/ski at various places... so,
@@ -15,12 +15,12 @@ A web application that allows users to see the day's snowfall forecast at popula
 * Search Page (or bar)
 * Forecast Details
 ### 3. Tasks
-![Tasks]()
+![Tasks](https://github.com/sakalmon/snowcast/blob/main/Tasks.png?raw=true)
 ### 4. Wireframes
 #### Popular Resorts (Home Page)
-![Popular Resorts (Home Page)]()
+![Popular Resorts (Home Page)](https://github.com/sakalmon/snowcast/blob/main/Popular%20Resorts%20Page.png?raw=true)
 #### Forecast Details
-![Forecast Details]()
+![Forecast Details](https://github.com/sakalmon/snowcast/blob/main/Forecast%20Details%20Page.png?raw=true)
 ### 5. Things to watch out for
 * Scope/feature creep
 * Implementing overly ambitious features
