@@ -11,14 +11,10 @@ function Search({ hideResorts }) {
 
   const getSearchedSnowFall = () => {
     searchResults.forEach(resort => {    
-      console.log(`Getting data for ${resort.formattedName}`);
-      
       if (!(fetched.includes(resort.formattedName))) {
         fetched.push(resort);
         getResortSnowFall(resort.formattedName, resort.lat, resort.lon, resort.country, resort.flag)
           .then(newSnowFallData => {
-              console.log('Data going into ResortForecast is:')
-              console.log(newSnowFallData)
               setSearchedSnowFallData(oldSnowFallData => [...oldSnowFallData, newSnowFallData]);              
           });
       }
@@ -76,8 +72,6 @@ function Search({ hideResorts }) {
         }
       }
 
-      console.log(`Type is: ${typeof formattedTime}`)
-            
       return {
         time: formattedTime,
         hourSnowFall: hourSnowFall.snowFall
@@ -117,8 +111,6 @@ function Search({ hideResorts }) {
       };
     });
 
-    console.log(newResults)
-
     setSearchResults(newResults);
   }
 
@@ -141,8 +133,6 @@ function Search({ hideResorts }) {
       </div>
       <div className="search-results">
         {searchedSnowFallData.map((resort, index) => {
-          console.log('Resort:')
-          console.log(resort)
           return <SearchResult key={index} result={resort} />
         })}
       </div>

@@ -12,10 +12,7 @@ class SnowCast extends React.Component {
   };
 
   componentDidMount() {
-    console.log('Component mounted');
-    
     this.state.popularResorts.forEach(resort => {    
-      console.log(`Getting data for ${resort}`);
       const snowFallData = this.getLatLonCountry(resort)
         .then(({lat, lon, country}) => this.getResortSnowFall(resort, lat, lon, country))
         .then(newSnowFallData => {
@@ -25,8 +22,6 @@ class SnowCast extends React.Component {
             });
           }
         });
-
-      console.log(snowFallData);
     });
   }
 
@@ -53,7 +48,6 @@ class SnowCast extends React.Component {
     const lon = data.results[0].geometry.lng;
     const country = data.results[0].components.country;
     
-    console.log(lat, lon, country)
     return { lat, lon, country };
   }
 
@@ -86,8 +80,6 @@ class SnowCast extends React.Component {
       }
     }).slice(0, 24);
       
-    console.log(hourlySnowFall);
-
     return {
       ...newSnowFallData,
       currentTemp: data.current.temp,

@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import Resort from './Resort';
 import '../assets/stylesheets/PopularResorts.scss';
 import Search from './Search';
-import { toBeEmpty } from '@testing-library/jest-dom/dist/matchers';
 
 function PopularResorts() {
   const [snowFallData, setSnowFallData] = useState([]);
@@ -21,17 +20,11 @@ function PopularResorts() {
     ];
 
     popularResorts.forEach(resort => {    
-      console.log(`Getting data for ${resort}`);
-      
       if (!(fetched.includes(resort))) {
-        console.log(fetched)
         fetched.push(resort);
-        console.log(fetched)
         getLatLonCountry(resort)
           .then(({lat, lon, country, flag}) => getResortSnowFall(resort, lat, lon, country, flag))
           .then(newSnowFallData => {
-              console.log('newSnowFallData')
-              console.log(newSnowFallData)
               setSnowFallData(oldSnowFallData => [...oldSnowFallData, newSnowFallData]);              
           });
       }      
@@ -55,7 +48,6 @@ function PopularResorts() {
 
   const getResortSnowFall = async (resortName, lat, lon, country, flag) => {
     const openWeatherApiKey = process.env.REACT_APP_OPEN_WEATHER_API_KEY;
-    console.log(flag)
     const requestUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${openWeatherApiKey}&units=metric`;
 
     console.log('Fetching from Open Weather API');
@@ -104,8 +96,6 @@ function PopularResorts() {
         }
       }
 
-      console.log(`Type is: ${typeof formattedTime}`)
-            
       return {
         time: formattedTime,
         hourSnowFall: hourSnowFall.snowFall

@@ -7,9 +7,6 @@ function ResortForecast() {
   const { clickedResort } = location.state;
   const { resortName, country, snowFallToday, currentTemp, iconCode, hourlySnowFall, flag } = clickedResort;
 
-  console.log('hourly snowfall for no data tiles')
-  console.log(hourlySnowFall)
-  
   return (
     <div className="ResortForecast">
       <div className="resort-forecast-container">
