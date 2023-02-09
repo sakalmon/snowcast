@@ -28,7 +28,7 @@ function PopularResorts() {
         fetched.push(resort);
         console.log(fetched)
         getLatLonCountry(resort)
-          .then(({lat, lon, country}) => getResortSnowFall(resort, lat, lon, country))
+          .then(({lat, lon, country, flag}) => getResortSnowFall(resort, lat, lon, country, flag))
           .then(newSnowFallData => {
               console.log('newSnowFallData')
               console.log(newSnowFallData)
@@ -48,13 +48,14 @@ function PopularResorts() {
     const lat = data.results[0].geometry.lat;
     const lon = data.results[0].geometry.lng;
     const country = data.results[0].components.country;
+    const flag = data.results[0].annotations.flag;
     
-    return { lat, lon, country };
+    return { lat, lon, country, flag };
   };
 
-  const getResortSnowFall = async (resortName, lat, lon, country) => {
+  const getResortSnowFall = async (resortName, lat, lon, country, flag) => {
     const openWeatherApiKey = process.env.REACT_APP_OPEN_WEATHER_API_KEY;
-
+    console.log(flag)
     const requestUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${openWeatherApiKey}&units=metric`;
 
     console.log('Fetching from Open Weather API');
@@ -116,7 +117,8 @@ function PopularResorts() {
       currentTemp: data.current.temp,
       country: country,
       iconCode: data.current.weather[0].icon,
-      hourlySnowFall: convHourlySnowFall
+      hourlySnowFall: convHourlySnowFall,
+      flag: flag
     };
   };
 
@@ -137,6 +139,7 @@ function PopularResorts() {
             currentTemp={forecast.currentTemp}
             iconCode={forecast.iconCode}
             hourlySnowFall={forecast.hourlySnowFall}
+            flag={forecast.flag}
           />
         ))}
       </div>

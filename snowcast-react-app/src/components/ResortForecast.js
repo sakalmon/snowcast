@@ -5,7 +5,10 @@ import '../assets/stylesheets/ResortForecast.scss';
 function ResortForecast() {
   const location = useLocation();
   const { clickedResort } = location.state;
-  const { resortName, country, snowFallToday, currentTemp, iconCode, hourlySnowFall } = clickedResort;
+  const { resortName, country, snowFallToday, currentTemp, iconCode, hourlySnowFall, flag } = clickedResort;
+
+  console.log('hourly snowfall for no data tiles')
+  console.log(hourlySnowFall)
   
   return (
     <div className="ResortForecast">
@@ -15,24 +18,28 @@ function ResortForecast() {
           snowFallToday={snowFallToday}
           currentTemp={currentTemp}
           iconCode={iconCode}
+          flag={flag}
         />
-        <section className="hourly-snowfall">
-          <p>Snowfall Per Hour (mm)</p>
-          <div className="each-hour-container">
-            {hourlySnowFall.map((hourSnowFall, index) => {
-              if (hourSnowFall.time) {
-                return (
-                  <div key={index} className="each-hour">
-                    <p className="hour">{hourSnowFall.time}</p>
-                    <p className="hour-snowfall">{hourSnowFall.hourSnowFall}</p>
-                  </div>
-                );                
-              } else {
-                return ('');
-              }
-            })}
-          </div>
-        </section>
+        {hourlySnowFall.filter(hourSnowFall => hourSnowFall.time !== '').length > 0 && (
+          <section className="hourly-snowfall">
+            <p>Snowfall Per Hour (mm)</p>
+            <div className="each-hour-container">
+              {hourlySnowFall.map((hourSnowFall, index) => {
+                if (hourSnowFall.time) {
+                  return (
+                    <div key={index} className="each-hour">
+                      <p className="hour">{hourSnowFall.time}</p>
+                      <p className="hour-snowfall">{hourSnowFall.hourSnowFall}</p>
+                    </div>
+                  );                
+                } else {
+                  return ('');
+                }
+              })}
+            </div>
+          </section>
+        )}
+        
     </div>
   );
 }

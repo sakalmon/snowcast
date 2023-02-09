@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import '../assets/stylesheets/Resort.scss'
 
 function Resort(props) {
-  const { resortName, country, snowFallToday, currentTemp, iconCode } = props;
+  const { resortName, country, snowFallToday, currentTemp, iconCode, flag } = props;
   const iconLink = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
 
   console.log(resortName, country, snowFallToday, currentTemp, iconCode)
@@ -12,9 +12,9 @@ function Resort(props) {
   return (
     <Link to='/resort_forecast' state={{ clickedResort: props }}>
       <div className="Resort">
-        <div className="name-country">
+        <div className="name-flag">
           <p className="name">{resortName}</p>
-          <p className="country">{country}</p>
+          <p className="flag">{flag}</p>
         </div>
         <section className="weather-icon">
           <img src={iconLink} alt="" />

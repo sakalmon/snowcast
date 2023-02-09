@@ -15,7 +15,7 @@ function Search({ hideResorts }) {
       
       if (!(fetched.includes(resort.formattedName))) {
         fetched.push(resort);
-        getResortSnowFall(resort.formattedName, resort.lat, resort.lon, resort.country)
+        getResortSnowFall(resort.formattedName, resort.lat, resort.lon, resort.country, resort.flag)
           .then(newSnowFallData => {
               console.log('Data going into ResortForecast is:')
               console.log(newSnowFallData)
@@ -25,7 +25,7 @@ function Search({ hideResorts }) {
     });
   }
 
-  const getResortSnowFall = async (resortName, lat, lon, country) => {
+  const getResortSnowFall = async (resortName, lat, lon, country, flag) => {
     const openWeatherApiKey = process.env.REACT_APP_OPEN_WEATHER_API_KEY;
 
     const requestUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${openWeatherApiKey}&units=metric`;
@@ -89,7 +89,8 @@ function Search({ hideResorts }) {
       currentTemp: data.current.temp,
       country: country,
       iconCode: data.current.weather[0].icon,
-      hourlySnowFall: convHourlySnowFall
+      hourlySnowFall: convHourlySnowFall,
+      flag: flag
     };
   };
   
@@ -111,7 +112,8 @@ function Search({ hideResorts }) {
         formattedName: apiResult.formatted,
         lat: apiResult.geometry.lat,
         lon: apiResult.geometry.lng,
-        country: apiResult.components.country
+        country: apiResult.components.country,
+        flag: apiResult.annotations.flag
       };
     });
 
