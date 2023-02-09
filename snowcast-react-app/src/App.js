@@ -11,7 +11,6 @@ function App() {
     <div className="App">
       <Header />
       <Navigation />
-      <Search />
       <Routes>
         <Route path='/' element={<PopularResorts />} />
         <Route path='/search' element={<Search />} />

@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
 import Resort from './Resort';
 import '../assets/stylesheets/PopularResorts.scss';
+import Search from './Search';
 
 function PopularResorts() {
   const [snowFallData, setSnowFallData] = useState([]);
+  const [resortsVisible, setResortsVisible] = useState(true);
+
   const fetched = [];
 
   const getPopularSnowFall = () => {
@@ -84,21 +87,26 @@ function PopularResorts() {
     };
   };
 
+  const hideResorts = () => setResortsVisible(false);
+
   useEffect(getPopularSnowFall, []);
 
   return (
     <div className="PopularResorts">
-      {snowFallData.map((forecast, index) => 
-        <Resort
-          key={index} 
-          resortName={forecast.resortName}
-          country={forecast.country}
-          snowFallToday={forecast.snowFall}
-          currentTemp={forecast.currentTemp}
-          iconCode={forecast.iconCode}
-          hourlySnowFall={forecast.hourlySnowFall}
-        />
-      )}
+      <Search hideResorts={hideResorts} />
+      <div className="resorts-container">
+        {resortsVisible && (snowFallData.map((forecast, index) => 
+          <Resort
+            key={index} 
+            resortName={forecast.resortName}
+            country={forecast.country}
+            snowFallToday={forecast.snowFall}
+            currentTemp={forecast.currentTemp}
+            iconCode={forecast.iconCode}
+            hourlySnowFall={forecast.hourlySnowFall}
+          />
+        ))}
+      </div>
     </div>
   );
 }

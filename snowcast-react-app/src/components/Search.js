@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import SearchResult from './SearchResult';
 import '../assets/stylesheets/Search.scss';
 
-function Search() {
+function Search({ hideResorts }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [searchedSnowFallData, setSearchedSnowFallData] = useState([]);
@@ -63,6 +63,7 @@ function Search() {
   const handleContentChange = event => setSearchQuery(event.target.value);
 
   const getSearchResults = async query => {
+    hideResorts();
     document.querySelectorAll('.SearchResult').forEach(element => element.remove())
 
     const openCageApiKey = process.env.REACT_APP_OPEN_CAGE_API_KEY;

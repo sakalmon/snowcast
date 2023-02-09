@@ -55,13 +55,13 @@ body {
 }
 
 .PopularResorts {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.25rem;
-  margin: 1.5rem 1.5rem;
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 1rem;
+  // display: grid;
+  // grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  // gap: 1.25rem;
+  // margin: 1.5rem 1.5rem;
+  // max-width: 1000px;
+  // margin: 0 auto;
+  // padding: 1rem;
 
   .Resort {
     border: 1px solid skyblue;
