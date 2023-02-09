@@ -22,8 +22,8 @@ A web application that allows users to see the day's snowfall forecast at popula
 #### Forecast Details
 ![Forecast Details](https://github.com/sakalmon/snowcast/blob/main/Forecast%20Details%20Page.png?raw=true)
 ### 5. Component Architecture
-![Component Architecture]()
-### 5. Things to watch out for
+![Component Architecture](https://github.com/sakalmon/snowcast/blob/main/Component%20Architecture.png?raw=true)
+### 6. Things to watch out for
 * Scope/feature creep
 * Implementing overly ambitious features
 * Committing private API keys to Github (don't do it!)
