@@ -17,6 +17,8 @@ function Search({ hideResorts }) {
         fetched.push(resort);
         getResortSnowFall(resort.formattedName, resort.lat, resort.lon, resort.country)
           .then(newSnowFallData => {
+              console.log('Data going into ResortForecast is:')
+              console.log(newSnowFallData)
               setSearchedSnowFallData(oldSnowFallData => [...oldSnowFallData, newSnowFallData]);              
           });
       }
@@ -46,18 +48,48 @@ function Search({ hideResorts }) {
 
     const hourlySnowFall = data.hourly.map(hourForecast => {
       if (hourForecast.snow) {
-        return hourForecast.snow['1h'];
+        return {
+          time: hourForecast.dt,
+          snowFall: hourForecast.snow['1h']
+        };
       } else {
         return 0;
       }
     }).slice(0, 24);
+      
+    const convHourlySnowFall = hourlySnowFall.map(hourSnowFall => {
+      const epoch = hourSnowFall.time;
+      const dateObj = new Date(0);
+      dateObj.setUTCSeconds(epoch);
+      const time = dateObj.getHours();
+      let formattedTime = '';
+
+      if (time >= 0 && time < 24) {
+        if (time === 12) {
+          formattedTime = '12pm';
+        } else if (time === 0) {
+          formattedTime = '12am';
+        } else if (time > 12) {
+          formattedTime = (time - 12).toString() + 'pm';
+        } else {
+          formattedTime = time.toString() + 'am';
+        }
+      }
+
+      console.log(`Type is: ${typeof formattedTime}`)
+            
+      return {
+        time: formattedTime,
+        hourSnowFall: hourSnowFall.snowFall
+      };
+    })
       
     return {
       ...newSnowFallData,
       currentTemp: data.current.temp,
       country: country,
       iconCode: data.current.weather[0].icon,
-      hourlySnowFall: hourlySnowFall
+      hourlySnowFall: convHourlySnowFall
     };
   };
   
