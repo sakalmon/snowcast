@@ -64,6 +64,7 @@ A web application that allows users to see the day's snowfall forecast at popula
 * Be careful with where fetch requests go in React as it can cause an infinite loop which uses up all of your APIs quotas (ask me how I know :grin:)
 * Embrace front-end routing as it's very useful (learnt that you can pass data through a Link component)
 * Javascript thinks NaN is of data type: 'number' :trollface:
+![Javascript NaN](https://github.com/sakalmon/snowcast/blob/main/Javascript%20NaN.png?raw=true)
 ## :beetle: Bugs
 * Clicking on a resort while on the forecast details page causes a blank white page to appear (this is due to the Resort component being reused which is intended to be clickable on a different page).
 * Can't navigate anywhere else if a search result is not clicked
