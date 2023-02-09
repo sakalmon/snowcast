@@ -20,12 +20,16 @@ function ResortForecast() {
           <p>Snowfall Per Hour (mm)</p>
           <div className="each-hour-container">
             {hourlySnowFall.map((hourSnowFall, index) => {
-              return (
-                <div key={index} className="each-hour">
-                  <p className="hour">{index}</p>
-                  <p className="hour-snowfall">{hourSnowFall}</p>
-                </div>
-              );
+              if (hourSnowFall.time) {
+                return (
+                  <div key={index} className="each-hour">
+                    <p className="hour">{hourSnowFall.time}</p>
+                    <p className="hour-snowfall">{hourSnowFall.hourSnowFall}</p>
+                  </div>
+                );                
+              } else {
+                return ('');
+              }
             })}
           </div>
         </section>
