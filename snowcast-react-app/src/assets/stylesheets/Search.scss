@@ -1,5 +1,6 @@
 .Search {
   margin-left: 50px;
+  margin-top: 15px;
 }
 
 .search-box {
@@ -26,4 +27,9 @@ button {
 .fa-magnifying-glass {
   position: relative;
   left: 2.5rem;
+}
+
+form {
+  position: relative;
+  left: -2.5rem;
 }

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Resort from './Resort';
+import '../assets/stylesheets/PopularResorts.scss';
 
 function PopularResorts() {
   const [snowFallData, setSnowFallData] = useState([]);
