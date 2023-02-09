@@ -21,6 +21,8 @@ A web application that allows users to see the day's snowfall forecast at popula
 ![Popular Resorts (Home Page)](https://github.com/sakalmon/snowcast/blob/main/Popular%20Resorts%20Page.png?raw=true)
 #### Forecast Details
 ![Forecast Details](https://github.com/sakalmon/snowcast/blob/main/Forecast%20Details%20Page.png?raw=true)
+### 5. Component Architecture
+![Component Architecture]()
 ### 5. Things to watch out for
 * Scope/feature creep
 * Implementing overly ambitious features
