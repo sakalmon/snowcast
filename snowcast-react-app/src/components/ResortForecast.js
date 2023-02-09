@@ -12,6 +12,7 @@ function ResortForecast() {
   
   return (
     <div className="ResortForecast">
+      <div className="resort-forecast-container">
         <Resort
           resortName={resortName}
           country={country}
@@ -22,7 +23,7 @@ function ResortForecast() {
         />
         {hourlySnowFall.filter(hourSnowFall => hourSnowFall.time !== '').length > 0 && (
           <section className="hourly-snowfall">
-            <p>Snowfall Per Hour (mm)</p>
+            <p>Snowfall Per Hour (mm) AEST</p>
             <div className="each-hour-container">
               {hourlySnowFall.map((hourSnowFall, index) => {
                 if (hourSnowFall.time) {
@@ -39,7 +40,7 @@ function ResortForecast() {
             </div>
           </section>
         )}
-        
+      </div>        
     </div>
   );
 }

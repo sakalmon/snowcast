@@ -1,9 +1,13 @@
 .ResortForecast {
-  margin-top: 30px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: column;
   align-items: center;
+  background-image: url('https://images.unsplash.com/photo-1613420365631-c588e7cac611?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1335&q=80');
+  // padding-top: 20px;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-position: center;
 
   .Resort {
     display: flex;
@@ -20,6 +24,17 @@
     }
   }
 
+  .resort-forecast-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 80vw;
+    background-color: rgb(0, 0, 0, 0.5);
+    height: 100vh;
+    padding-top: 20px;
+  }
+
   .weather-icon {
     display: flex;
     justify-content: center;
@@ -31,13 +46,18 @@
     gap: 1rem;
     flex-direction: column;
     align-items: center;
-    background-color: rgba(135, 206, 250, 0.486);
+    // background-color: rgba(135, 206, 250, 0.486);
+    background-color: rgba(135, 206, 250, 0.8);
     width: fit-content;
     border: 1px solid lightskyblue;
     border-radius: 10px;
     margin-top: 50px;
     color: navy;
     box-shadow: 5px 5px 5px grey;
+
+    @media screen and (max-width: 820px) {
+      width: 80vw;
+    }
 
     >p {
       margin: 0;
@@ -61,7 +81,9 @@
 
   .each-hour-container {
     display: flex;
+    justify-content: center;
     gap: 1rem;
     margin: 0 1rem;
+    width: 100%;
   }
 }
