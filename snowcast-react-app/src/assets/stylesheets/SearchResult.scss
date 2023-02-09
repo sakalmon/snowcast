@@ -17,15 +17,26 @@
   border-bottom-right-radius: 25px;
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
+  background-color: white;
 
   .SearchResult {
     display: flex;
     justify-content: center;
     border-top: 1px solid lightgrey;
     padding: 0 1rem;
+
+    a {
+      color: black;
+    }
   }
 
   .SearchResult:hover {
     background-color: lightskyblue;
+  }
+}
+
+.Search {
+  form {
+    z-index: 1;
   }
 }

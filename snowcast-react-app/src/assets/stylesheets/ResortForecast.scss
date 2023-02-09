@@ -17,7 +17,7 @@
     justify-content: space-between;
     flex-direction: column;
     width: fit-content;
-    box-shadow: 5px 5px 5px grey;
+    box-shadow: 5px 5px 5px black;
 
     .snow, .temp {
       align-items: center;
@@ -53,7 +53,7 @@
     border-radius: 10px;
     margin-top: 50px;
     color: navy;
-    box-shadow: 5px 5px 5px grey;
+    box-shadow: 5px 5px 5px black;
 
     @media screen and (max-width: 820px) {
       width: 80vw;
