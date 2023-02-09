@@ -1,5 +1,6 @@
 import Resort from '../components/Resort';
 import { useLocation } from 'react-router-dom';
+import '../assets/stylesheets/ResortForecast.scss';
 
 function ResortForecast() {
   const location = useLocation();
@@ -21,8 +22,8 @@ function ResortForecast() {
             {hourlySnowFall.map((hourSnowFall, index) => {
               return (
                 <div key={index} className="each-hour">
-                  <p>{index}</p>
-                  <p>{hourSnowFall}</p>
+                  <p className="hour">{index}</p>
+                  <p className="hour-snowfall">{hourSnowFall}</p>
                 </div>
               );
             })}

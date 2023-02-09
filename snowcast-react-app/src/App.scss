@@ -118,51 +118,7 @@ body {
   }
 }
 
-.ResortForecast {
-  margin-top: 30px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
 
-  .Resort {
-    display: flex;
-    border: 1px solid skyblue;
-    border-radius: 5px;
-    padding: 1rem;
-    justify-content: space-between;
-    flex-direction: column;
-    width: fit-content;
-    box-shadow: 5px 5px 5px grey;
-
-    .snow, .temp {
-      align-items: center;
-    }
-  }
-
-  .weather-icon {
-    display: flex;
-    justify-content: center;
-  }
-
-  .hourly-snowfall {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-direction: column;
-    width: 100%;
-    align-items: center;
-
-    p {
-      margin: 1rem 0 0 0;
-    }
-  }
-
-  .each-hour-container {
-    display: flex;
-    gap: 1rem;
-  }
-}
 
 .name-country {
   display: flex;
