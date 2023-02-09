@@ -13,6 +13,7 @@ input {
   border-radius: 25px;
   font-size: 1.5rem;
   padding: 0 1rem;
+  padding: 0 1rem 0 3rem;
   text-align: center;
 }
 
@@ -20,4 +21,9 @@ button {
   height: 50px;
   width: 100px;
   display: none;
+}
+
+.fa-magnifying-glass {
+  position: relative;
+  left: 2.5rem;
 }
