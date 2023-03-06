@@ -5,7 +5,7 @@ import '../assets/stylesheets/Resort.scss'
 
 function Resort(props) {
   const { resortName, snowFallToday, currentTemp, iconCode, flag } = props;
-  const iconLink = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
+  const weatherIcon = `/weather_icons/${iconCode}.png`;
 
   return (
     <Link to='/resort_forecast' state={{ clickedResort: props }}>
@@ -15,7 +15,7 @@ function Resort(props) {
           <p className="flag">{flag}</p>
         </div>
         <section className="weather-icon">
-          <img src={iconLink} alt="" />
+          <img src={weatherIcon} alt="" />
         </section>
         <section className="forecast-details">
           <div className="snow-temp">
