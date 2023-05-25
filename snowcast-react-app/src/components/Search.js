@@ -91,7 +91,7 @@ function Search({ hideResorts }) {
   const handleContentChange = event => setSearchQuery(event.target.value);
 
   const getSearchResults = async query => {
-    hideResorts();
+    // hideResorts();
     document.querySelectorAll('.SearchResult').forEach(element => element.remove())
 
     const openCageApiKey = process.env.REACT_APP_OPEN_CAGE_API_KEY;
