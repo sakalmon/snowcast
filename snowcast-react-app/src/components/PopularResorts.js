@@ -112,13 +112,13 @@ function PopularResorts() {
     };
   };
 
-  const hideResorts = () => setResortsVisible(false);
+  // const hideResorts = () => setResortsVisible(false);
 
   useEffect(getPopularSnowFall, []);
 
   return (
     <div className="PopularResorts">
-      <Search hideResorts={hideResorts} />
+      <Search />
       <div className="resorts-container">
         {resortsVisible && (snowFallData.map((forecast, index) => 
           <Resort

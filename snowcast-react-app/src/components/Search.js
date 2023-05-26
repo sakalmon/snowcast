@@ -93,7 +93,7 @@ function Search({ hideResorts }) {
 
   const getSearchResults = async query => {
     // hideResorts();
-    document.querySelectorAll('.SearchResult').forEach(element => element.remove())
+    document.querySelectorAll('.SearchResult').forEach(element => element.remove());
 
     const openCageApiKey = process.env.REACT_APP_OPEN_CAGE_API_KEY;
     const requestUrl = `https://api.opencagedata.com/geocode/v1/json?q=${query}&key=${openCageApiKey}&limit=10`;
@@ -123,6 +123,8 @@ function Search({ hideResorts }) {
     inputDOM.style.color = 'black';
   }
 
+  const clearSnowFallData = () => setSearchedSnowFallData([]);
+
   return (
     <div className="Search">
       <div className="search-box">
@@ -135,7 +137,7 @@ function Search({ hideResorts }) {
           <button onClick={() => getSearchResults(searchQuery)}>Search</button>
         </form>
       </div>
-      <div className="search-results">
+      <div className="search-results" onClick={clearSnowFallData}>
         {searchedSnowFallData.map((resort, index) => {
           return <SearchResult key={index} result={resort} />
         })}

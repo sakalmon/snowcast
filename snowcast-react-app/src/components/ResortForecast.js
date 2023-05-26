@@ -1,4 +1,5 @@
 import Resort from '../components/Resort';
+import Search from '../components/Search';
 import { useLocation } from 'react-router-dom';
 import '../assets/stylesheets/ResortForecast.scss';
 
@@ -9,6 +10,7 @@ function ResortForecast() {
 
   return (
     <div className="ResortForecast">
+      <Search />
       <div className="resort-forecast-container">
         <Resort
           resortName={resortName}
