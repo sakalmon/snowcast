@@ -7,9 +7,10 @@ function Search({ hideResorts }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [searchedSnowFallData, setSearchedSnowFallData] = useState([]);
-  const fetched = [];
-
+  
   const getSearchedSnowFall = () => {
+    const fetched = [];
+    
     searchResults.forEach(resort => {    
       if (!(fetched.includes(resort.formattedName))) {
         fetched.push(resort);
