@@ -7,9 +7,8 @@ function PopularResorts() {
   const [snowFallData, setSnowFallData] = useState([]);
   const [resortsVisible, setResortsVisible] = useState(true);
 
-  const fetched = [];
-
   const getPopularSnowFall = () => {
+    const fetched = [];
     const popularResorts = [
       'Lake Louise Ski Resort',
       'Aspen Ski Resort',
