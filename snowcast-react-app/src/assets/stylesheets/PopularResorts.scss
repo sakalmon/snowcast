@@ -19,3 +19,24 @@
   width: fit-content;
   margin: 0 auto;
 }
+
+@media screen and (max-width: 600px) {
+  .PopularResorts {
+    background-size: 500% auto;
+    height: fit-content;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+
+    .resorts-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: fit-content;
+      width: 100%;
+    }
+  }
+}

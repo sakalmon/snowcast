@@ -10,6 +10,12 @@ function PopularResorts() {
   const getPopularSnowFall = () => {
     const fetched = [];
     const popularResorts = [
+      'Perisher',
+      'Thredbo',
+      'Turoa',
+      'Whakapapa',
+      'Theodul',
+      'Las Lenas',
       'Lake Louise Ski Resort',
       'Aspen Ski Resort',
       'Niseko Ski Resort',

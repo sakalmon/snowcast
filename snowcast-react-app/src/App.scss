@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  // border: 1px solid red;
 }
 
 body {
@@ -10,4 +11,12 @@ body {
 a, .link {
   text-decoration: none;
   color: white;
+}
+
+@media screen and (max-width: 600px) {
+  .App {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
 }

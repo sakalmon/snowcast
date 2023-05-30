@@ -94,3 +94,15 @@
 .Search {
   width: 100%;
 }
+
+@media screen and (max-width: 600px) {
+  .ResortForecast {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .ResortForecast .resort-forecast-container {
+    width: 100%;
+  }
+}
