@@ -23,3 +23,9 @@
     margin: 0;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .Navivation {
+    min-width: 100vw;
+  }
+}

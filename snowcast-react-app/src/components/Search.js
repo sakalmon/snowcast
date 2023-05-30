@@ -127,20 +127,24 @@ function Search({ hideResorts }) {
 
   return (
     <div className="Search">
-      <div className="search-box">
-        <form onSubmit={event => {
-          event.preventDefault();
-          getSearchResults(searchQuery);
-        }}>
-          <i className="fa-solid fa-magnifying-glass fa-xl"></i>
-          <input type="text" onChange={handleContentChange} value={searchQuery || "Search Ski Resorts"} style={{color:'grey'}} onClick={handleInputClick} />
-          <button onClick={() => getSearchResults(searchQuery)}>Search</button>
-        </form>
-      </div>
-      <div className="search-results" onClick={clearSnowFallData}>
-        {searchedSnowFallData.map((resort, index) => {
-          return <SearchResult key={index} result={resort} />
-        })}
+      <div className="search-container">
+        <div className="search-box">
+          <form onSubmit={event => {
+            event.preventDefault();
+            getSearchResults(searchQuery);
+          }}>
+            <i className="fa-solid fa-magnifying-glass fa-xl"></i>
+            <input type="text" onChange={handleContentChange} value={searchQuery || "Search Ski Resorts"} style={{color:'grey'}} onClick={handleInputClick} />
+            <button onClick={() => getSearchResults(searchQuery)}
+            >Search</button>
+            <div></div>
+          </form>
+        </div>
+        <div className="search-results" onClick={clearSnowFallData}>
+          {searchedSnowFallData.map((resort, index) => {
+            return <SearchResult key={index} result={resort} />
+          })}
+        </div>
       </div>
     </div>
   );
