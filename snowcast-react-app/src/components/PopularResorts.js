@@ -14,6 +14,8 @@ function PopularResorts() {
       'Thredbo',
       'Turoa',
       'Whakapapa',
+      'Theodul',
+      'Las Lenas',
       'Lake Louise Ski Resort',
       'Aspen Ski Resort',
       'Niseko Ski Resort',
