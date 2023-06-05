@@ -17,12 +17,6 @@ function PopularResorts() {
       'Whakapapa',
       'Theodul',
       'Las Lenas',
-      'Lake Louise Ski Resort',
-      'Aspen Ski Resort',
-      'Niseko Ski Resort',
-      'Yongpyeong Resort',
-      'Lenzerheide-Valbella',
-      'Whistler Blackcomb'
     ];
 
     popularResorts.forEach(resort => {    

@@ -1,6 +1,5 @@
 import temperatureIcon from '../assets/temperature.png';
 import snowIcon from '../assets/snow.png';
-import { Link } from 'react-router-dom';
 import '../assets/stylesheets/Resort.scss'
 
 function Resort(props) {
