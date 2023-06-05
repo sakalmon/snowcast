@@ -83,6 +83,11 @@ function PopularResorts() {
       }
     }).slice(0, 24);
 
+    const eightDaySnowFall = data.daily
+      .filter(day => day.snow > 0)
+      .reduce((total, day) => total + day.snow, 0)
+      .toFixed(2);
+
     const convHourlySnowFall = hourlySnowFall.map(hourSnowFall => {
       const epoch = hourSnowFall.time;
       const dateObj = new Date(0);
@@ -114,6 +119,7 @@ function PopularResorts() {
       country: country,
       iconCode: data.current.weather[0].icon,
       hourlySnowFall: convHourlySnowFall,
+      eightDaySnowFall: eightDaySnowFall,
       flag: flag
     };
   };
@@ -127,11 +133,12 @@ function PopularResorts() {
       <Search />
       <div className="resorts-container">
         {resortsVisible && (snowFallData.map((forecast, index) => 
-          <Link to='/resort_forecast' state={{ clickedResort: {
+          <Link key={index} to='/resort_forecast' state={{ clickedResort: {
             key: index, 
             resortName: forecast.resortName,
             country: forecast.country,
             snowFallToday: forecast.snowFall,
+            eightDaySnowFall: forecast.eightDaySnowFall,
             currentTemp: forecast.currentTemp,
             iconCode: forecast.iconCode,
             hourlySnowFall: forecast.hourlySnowFall,
@@ -142,6 +149,7 @@ function PopularResorts() {
               resortName={forecast.resortName}
               country={forecast.country}
               snowFallToday={forecast.snowFall}
+              eightDaySnowFall={forecast.eightDaySnowFall}
               currentTemp={forecast.currentTemp}
               iconCode={forecast.iconCode}
               hourlySnowFall={forecast.hourlySnowFall}

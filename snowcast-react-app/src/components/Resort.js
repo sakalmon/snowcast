@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import '../assets/stylesheets/Resort.scss'
 
 function Resort(props) {
-  const { resortName, snowFallToday, currentTemp, iconCode, flag } = props;
+  const { resortName, snowFallToday, eightDaySnowFall, currentTemp, iconCode, flag } = props;
   const weatherIcon = `/weather_icons/${iconCode}.png`;
 
   return (
@@ -22,6 +22,8 @@ function Resort(props) {
             <img className="snow-icon" src={snowIcon} alt="" />
             <div className="snow-num-unit">
               <span className="snow-num">{snowFallToday}</span>
+              <span className="snow-unit">(mm)</span>
+              <span className="snow-num">{eightDaySnowFall}</span>
               <span className="snow-unit">(mm)</span>
             </div>
           </div>
