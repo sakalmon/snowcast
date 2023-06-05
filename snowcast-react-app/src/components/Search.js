@@ -77,7 +77,12 @@ function Search({ hideResorts }) {
         time: formattedTime,
         hourSnowFall: hourSnowFall.snowFall
       };
-    })
+    });
+
+    const eightDaySnowFall = data.daily
+      .filter(day => day.snow > 0)
+      .reduce((total, day) => total + day.snow, 0)
+      .toFixed(2);
       
     return {
       ...newSnowFallData,
@@ -85,6 +90,7 @@ function Search({ hideResorts }) {
       country: country,
       iconCode: data.current.weather[0].icon,
       hourlySnowFall: convHourlySnowFall,
+      eightDaySnowFall: eightDaySnowFall,
       flag: flag
     };
   };

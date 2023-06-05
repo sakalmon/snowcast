@@ -1,12 +1,12 @@
 import Resort from '../components/Resort';
 import Search from '../components/Search';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import '../assets/stylesheets/ResortForecast.scss';
 
 function ResortForecast() {
   const location = useLocation();
   const { clickedResort } = location.state;
-  const { resortName, country, snowFallToday, currentTemp, iconCode, hourlySnowFall, flag } = clickedResort;
+  const { resortName, country, snowFallToday, currentTemp, iconCode, hourlySnowFall, eightDaySnowFall, flag } = clickedResort;
 
   return (
     <div className="ResortForecast">
@@ -16,6 +16,7 @@ function ResortForecast() {
           resortName={resortName}
           country={country}
           snowFallToday={snowFallToday}
+          eightDaySnowFall={eightDaySnowFall}
           currentTemp={currentTemp}
           iconCode={iconCode}
           flag={flag}
