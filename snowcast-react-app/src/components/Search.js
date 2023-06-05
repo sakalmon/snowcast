@@ -4,7 +4,9 @@ import '../assets/stylesheets/Search.scss';
 import '../assets/stylesheets/SearchResult.scss';
 
 function Search({ hideResorts }) {
-  const [searchQuery, setSearchQuery] = useState('');
+  const searchPlaceHolder = 'Search Ski Resorts';
+  const [searchQuery, setSearchQuery] = useState(searchPlaceHolder);
+  const [lastSearched, setLastSearched] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [searchedSnowFallData, setSearchedSnowFallData] = useState([]);
   
@@ -99,6 +101,7 @@ function Search({ hideResorts }) {
 
   const getSearchResults = async query => {
     // hideResorts();
+    setLastSearched(query);
     document.querySelectorAll('.SearchResult').forEach(element => element.remove());
 
     const openCageApiKey = process.env.REACT_APP_OPEN_CAGE_API_KEY;
@@ -115,7 +118,7 @@ function Search({ hideResorts }) {
         lon: apiResult.geometry.lng,
         country: apiResult.components.country,
         flag: apiResult.annotations.flag
-      };
+      }
     });
 
     setSearchResults(newResults);
@@ -124,9 +127,17 @@ function Search({ hideResorts }) {
   useEffect(getSearchedSnowFall, [searchResults]);
 
   const handleInputClick = event => {
-    const inputDOM = event.target;
-    inputDOM.value = '';
-    inputDOM.style.color = 'black';
+    if (searchQuery === searchPlaceHolder) {
+      setSearchQuery('');
+    }
+
+    event.target.style.color = 'black';
+  }
+
+  const handleInputClickOff = event => {
+    if (searchQuery === '') {
+      lastSearched ? setSearchQuery(lastSearched) : setSearchQuery(searchPlaceHolder);
+    }
   }
 
   const clearSnowFallData = () => setSearchedSnowFallData([]);
@@ -140,7 +151,7 @@ function Search({ hideResorts }) {
             getSearchResults(searchQuery);
           }}>
             <i className="fa-solid fa-magnifying-glass fa-xl"></i>
-            <input type="text" onChange={handleContentChange} value={searchQuery || "Search Ski Resorts"} style={{color:'grey'}} onClick={handleInputClick} />
+            <input type="text" onChange={handleContentChange} value={searchQuery} style={{color:'grey'}} onClick={handleInputClick} onBlur={handleInputClickOff} />
             <button onClick={() => getSearchResults(searchQuery)}
             >Search</button>
             <div></div>
