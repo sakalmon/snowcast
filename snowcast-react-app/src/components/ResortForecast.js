@@ -1,6 +1,6 @@
 import Resort from '../components/Resort';
 import Search from '../components/Search';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import '../assets/stylesheets/ResortForecast.scss';
 
 function ResortForecast() {
