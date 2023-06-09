@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 import Resort from './Resort';
 import '../assets/stylesheets/PopularResorts.scss';
 import Search from './Search';
+import UnitSelector from '../components/UnitSelector';
 
 function PopularResorts() {
   const [snowFallData, setSnowFallData] = useState([]);
   const [resortsVisible, setResortsVisible] = useState(true);
-
+  const [unit, setUnit] = useState('C');
+  
   const getPopularSnowFall = () => {
     const fetched = [];
     const popularResorts = [
@@ -124,6 +126,7 @@ function PopularResorts() {
 
   return (
     <div className="PopularResorts">
+      <UnitSelector />
       <Search />
       <div className="resorts-container">
         {resortsVisible && (snowFallData.map((forecast, index) => 
