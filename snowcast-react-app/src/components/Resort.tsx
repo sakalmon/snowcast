@@ -1,8 +1,9 @@
 import temperatureIcon from '../assets/temperature.png';
 import snowIcon from '../assets/snow.png';
 import '../assets/stylesheets/Resort.scss'
+import type { ResortObjProps } from '../types';
 
-function Resort(props) {
+function Resort(props: ResortObjProps) {
   const { resortName, snowFallToday, eightDaySnowFall, currentTemp, iconCode, flag } = props;
   const weatherIcon = `/weather_icons/${iconCode}.png`;
 

@@ -3,7 +3,7 @@ import SearchResult from './SearchResult';
 import '../assets/stylesheets/Search.scss';
 import '../assets/stylesheets/SearchResult.scss';
 
-function Search({ hideResorts }) {
+function Search() {
   const searchPlaceHolder = 'Search Ski Resorts';
   const [searchQuery, setSearchQuery] = useState(searchPlaceHolder);
   const [lastSearched, setLastSearched] = useState('');
