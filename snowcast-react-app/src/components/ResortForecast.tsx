@@ -2,12 +2,14 @@ import Resort from '../components/Resort';
 import Search from '../components/Search';
 import { useLocation } from 'react-router-dom';
 import '../assets/stylesheets/ResortForecast.scss';
-import type { ResortObjProps } from '../types';
+import type { IResortObjProps } from '../types';
 
 function ResortForecast() {
   const location = useLocation();
-  const { clickedResort }: { clickedResort: ResortObjProps } = location.state;
+  const { clickedResort }: { clickedResort: IResortObjProps } = location.state;
   const { resortName, country, snowFallToday, currentTemp, iconCode, hourlySnowFall, eightDaySnowFall, flag } = clickedResort;
+
+  console.log(hourlySnowFall);
 
   return (
     <div className="ResortForecast">
@@ -22,11 +24,11 @@ function ResortForecast() {
           iconCode={iconCode}
           flag={flag}
         />
-        {hourlySnowFall.filter(hourSnowFall => hourSnowFall.time !== '').length > 0 && (
+        {hourlySnowFall!.filter(hourSnowFall => hourSnowFall.time !== '').length > 0 && (
           <section className="hourly-snowfall">
             <p>Snowfall Per Hour (mm) AEST</p>
             <div className="each-hour-container">
-              {hourlySnowFall.map((hourSnowFall, index) => {
+              {hourlySnowFall!.map((hourSnowFall, index) => {
                 if (hourSnowFall.time) {
                   return (
                     <div key={index} className="each-hour">

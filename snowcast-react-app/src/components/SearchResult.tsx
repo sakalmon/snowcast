@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import type { SearchResultProps, ResortObjProps } from '../types';
+import type { ISearchResultProps, IResortObjProps } from '../types';
 
-function SearchResult(props: { result: SearchResultProps }) {
-  const searchResult: ResortObjProps = Object.assign({snowFallToday: props.result.snowFall}, props.result);
+function SearchResult(props: { result: ISearchResultProps }) {
+  const searchResult: IResortObjProps = Object.assign({snowFallToday: props.result.snowFall}, props.result);
 
   return (
     <div className="SearchResult">
