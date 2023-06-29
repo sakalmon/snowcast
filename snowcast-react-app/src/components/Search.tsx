@@ -3,17 +3,41 @@ import SearchResult from './SearchResult';
 import '../assets/stylesheets/Search.scss';
 import '../assets/stylesheets/SearchResult.scss';
 
+interface ISearchResult {
+  formattedName: string;
+  lat: number;
+  lon: number;
+  country: string;
+  flag: string;
+}
+
+interface IApiResult {
+  formatted: string;
+  geometry: {
+    lat: number;
+    lng: number;
+  };
+  components: {
+    country: string
+  };
+  annotations: {
+    flag: string;    
+  }
+}
+
 function Search() {
   const searchPlaceHolder = 'Search Ski Resorts';
   const [searchQuery, setSearchQuery] = useState(searchPlaceHolder);
   const [lastSearched, setLastSearched] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const [searchedSnowFallData, setSearchedSnowFallData] = useState([]);
+  const [searchedSnowFallData, setSearchedSnowFallData] = useState<ISearchedSnowFallData>([]);
   
   const getSearchedSnowFall = () => {
-    const fetched = [];
+    const fetched: ISearchResult[] = [];
     
-    searchResults.forEach(resort => {    
+    searchResults.forEach((resort: ISearchResult) => {
+      console.log('resort')
+      console.log(resort)
       if (!(fetched.includes(resort.formattedName))) {
         fetched.push(resort);
         getResortSnowFall(resort.formattedName, resort.lat, resort.lon, resort.country, resort.flag)
@@ -111,7 +135,7 @@ function Search() {
     const res = await fetch(requestUrl);
     const data = await res.json();
     
-    const newResults = data.results.map(apiResult => {
+    const newResults = data.results.map((apiResult: IApiResult) => {
       return {
         formattedName: apiResult.formatted,
         lat: apiResult.geometry.lat,
@@ -126,7 +150,7 @@ function Search() {
 
   useEffect(getSearchedSnowFall, [searchResults]);
 
-  const handleInputClick = event => {
+  const handleInputClick = (event: React.MouseEventHandler<HTMLInputElement>) => {
     if (searchQuery === searchPlaceHolder) {
       setSearchQuery('');
     }
@@ -134,7 +158,7 @@ function Search() {
     event.target.style.color = 'black';
   }
 
-  const handleInputClickOff = event => {
+  const handleInputClickOff = (event: React.FocusEventHandler<HTMLInputElement>) => {
     if (searchQuery === '') {
       lastSearched ? setSearchQuery(lastSearched) : setSearchQuery(searchPlaceHolder);
     }
