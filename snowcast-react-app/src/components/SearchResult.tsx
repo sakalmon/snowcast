@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import type { ISearchResultProps, IResortObjProps } from '../types';
 
 function SearchResult(props: { result: ISearchResultProps }) {
-  const searchResult: IResortObjProps = Object.assign({snowFallToday: props.result.snowFall}, props.result);
+  const searchResult: ISearchResultProps | IResortObjProps = Object.assign({snowFallToday: props.result.snowFall}, props.result);
 
   return (
     <div className="SearchResult">

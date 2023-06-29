@@ -2,7 +2,6 @@ interface IBaseProps {
   resortName: string;
   country: string;
   currentTemp: number;
-  hourlySnowFall?: IHourlySnowFall;
   eightDaySnowFall: string;
   iconCode: IiconCode;
   flag: string;
@@ -19,10 +18,12 @@ interface IiconCode{
 
 interface ISearchResultProps extends IBaseProps {
   snowFall: string;
+  hourlySnowFall?: IHourlySnowFall[];
 }
 
 interface IResortObjProps extends IBaseProps{
   snowFallToday: string;
+  hourlySnowFall: IHourlySnowFall;
 }
 
 export type { IBaseProps, IHourlySnowFall, IiconCode, ISearchResultProps, IResortObjProps };
