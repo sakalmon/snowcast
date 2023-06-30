@@ -39,7 +39,6 @@ function PopularResorts() {
         getLatLonCountry(resortName)
           .then(({lat, lon, country, flag}) => getResortSnowFall({resortName, lat, lon, country, flag}))
           .then(newSnowFallData => {
-              console.log(newSnowFallData);
               setSnowFallData(oldSnowFallData => [...oldSnowFallData, newSnowFallData]);
           });
       }      

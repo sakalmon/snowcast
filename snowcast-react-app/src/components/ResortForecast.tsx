@@ -2,14 +2,14 @@ import Resort from '../components/Resort';
 import Search from '../components/Search';
 import { useLocation } from 'react-router-dom';
 import '../assets/stylesheets/ResortForecast.scss';
-import type { IResortObjProps, IHourlySnowFall, IResortForecast } from '../types';
+import type { IResortForecast } from '../types';
 
 function ResortForecast() {
   const location = useLocation();
   const { clickedResort }: { clickedResort: IResortForecast } = location.state;
   const { resortName, country, snowFallToday, currentTemp, iconCode, hourlySnowFall, eightDaySnowFall, flag } = clickedResort;
 
-  console.log(Array.isArray(hourlySnowFall))
+  console.log(hourlySnowFall);
 
   return (
     <div className="ResortForecast">

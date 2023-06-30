@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import SearchResult from './SearchResult';
 import '../assets/stylesheets/Search.scss';
 import '../assets/stylesheets/SearchResult.scss';
+import type { ISearchResultProps, IHourlySnowFall } from '../types';
 
 interface ISearchResult {
   formattedName: string;
@@ -25,30 +26,66 @@ interface IApiResult {
   }
 }
 
+interface IDay {
+  snow: number;
+}
+
+interface ISnowNext24Hours {
+  snowFall: number;
+}
+
+interface IHourlyForecast {
+  dt: number;
+  snow: {
+    '1h': number;
+  };
+}
+
 function Search() {
   const searchPlaceHolder = 'Search Ski Resorts';
   const [searchQuery, setSearchQuery] = useState(searchPlaceHolder);
   const [lastSearched, setLastSearched] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const [searchedSnowFallData, setSearchedSnowFallData] = useState<ISearchedSnowFallData>([]);
+  const [searchedSnowFallData, setSearchedSnowFallData] = useState<ISearchResultProps[]>([]);
+
+  const alreadyFetched = (array: ISearchResult[], resortName: string): boolean => {
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].formattedName === resortName) {
+        return true;
+      }
+    }
+
+    return false;
+  }
   
   const getSearchedSnowFall = () => {
     const fetched: ISearchResult[] = [];
     
-    searchResults.forEach((resort: ISearchResult) => {
-      console.log('resort')
-      console.log(resort)
-      if (!(fetched.includes(resort.formattedName))) {
+    // searchResults.forEach((resort: ISearchResult) => {
+    searchResults.forEach(({ formattedName, lat, lon, country, flag }: ISearchResult) => {
+
+      if (!(alreadyFetched(fetched, formattedName))) {
+        const resort = {
+          formattedName,
+          lat,
+          lon,
+          country,
+          flag
+        };
+
         fetched.push(resort);
-        getResortSnowFall(resort.formattedName, resort.lat, resort.lon, resort.country, resort.flag)
+
+        getResortSnowFall(resort)
           .then(newSnowFallData => {
-              setSearchedSnowFallData(oldSnowFallData => [...oldSnowFallData, newSnowFallData]);              
+              setSearchedSnowFallData(oldSnowFallData => [...oldSnowFallData, newSnowFallData]);
           });
       }
     });
   }
 
-  const getResortSnowFall = async (resortName, lat, lon, country, flag) => {
+  
+
+  const getResortSnowFall = async ({ formattedName, lat, lon, country, flag }: ISearchResult) => {
     const openWeatherApiKey = process.env.REACT_APP_OPEN_WEATHER_API_KEY;
 
     const requestUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${openWeatherApiKey}&units=metric`;
@@ -59,17 +96,17 @@ function Search() {
 
     const newSnowFallData = data.hourly
       .slice(0, 24)
-      .reduce((snowNext24Hours, hourlyForecast) => {
+      .reduce((snowNext24Hours: ISnowNext24Hours, hourlyForecast: IHourlyForecast) => {
         if (hourlyForecast.snow) {
           snowNext24Hours.snowFall += hourlyForecast.snow['1h'];
         }
 
         return snowNext24Hours;
-      }, { resortName: resortName, snowFall: 0 });
+      }, { resortName: formattedName, snowFall: 0 });
 
     newSnowFallData.snowFall = newSnowFallData.snowFall.toFixed(2);
 
-    const hourlySnowFall = data.hourly.map(hourForecast => {
+    const hourlySnowFall: IHourlySnowFall[] = data.hourly.map((hourForecast: IHourlyForecast) => {
       if (hourForecast.snow) {
         return {
           time: hourForecast.dt,
@@ -79,9 +116,16 @@ function Search() {
         return 0;
       }
     }).slice(0, 24);
-      
-    const convHourlySnowFall = hourlySnowFall.map(hourSnowFall => {
-      const epoch = hourSnowFall.time;
+
+    const convHourlySnowFall = hourlySnowFall.map((hourSnowFall) => {
+      let epoch: string | number;
+
+      if (typeof hourSnowFall.time === 'string') {
+        epoch = Number(hourSnowFall.time);
+      } else {
+        epoch = hourSnowFall.time;
+      }
+
       const dateObj = new Date(0);
       dateObj.setUTCSeconds(epoch);
       const time = dateObj.getHours();
@@ -106,8 +150,8 @@ function Search() {
     });
 
     const eightDaySnowFall = data.daily
-      .filter(day => day.snow > 0)
-      .reduce((total, day) => total + day.snow, 0)
+      .filter((day: IDay) => day.snow > 0)
+      .reduce((total: number, day: IDay) => total + day.snow, 0)
       .toFixed(2);
       
     return {
@@ -121,9 +165,9 @@ function Search() {
     };
   };
   
-  const handleContentChange = event => setSearchQuery(event.target.value);
+  const handleContentChange = (event: React.FormEvent<HTMLInputElement>) => setSearchQuery((event.target as HTMLInputElement).value);
 
-  const getSearchResults = async query => {
+  const getSearchResults = async (query: string) => {
     // hideResorts();
     setLastSearched(query);
     document.querySelectorAll('.SearchResult').forEach(element => element.remove());
@@ -150,15 +194,15 @@ function Search() {
 
   useEffect(getSearchedSnowFall, [searchResults]);
 
-  const handleInputClick = (event: React.MouseEventHandler<HTMLInputElement>) => {
+  const handleInputClick = (event: React.MouseEvent<HTMLInputElement>) => {
     if (searchQuery === searchPlaceHolder) {
       setSearchQuery('');
     }
 
-    event.target.style.color = 'black';
+    (event.target as HTMLInputElement).style.color = 'black';
   }
 
-  const handleInputClickOff = (event: React.FocusEventHandler<HTMLInputElement>) => {
+  const handleInputClickOff = (event: React.FocusEvent<HTMLInputElement>) => {
     if (searchQuery === '') {
       lastSearched ? setSearchQuery(lastSearched) : setSearchQuery(searchPlaceHolder);
     }
@@ -182,7 +226,7 @@ function Search() {
           </form>
         </div>
         <div className="search-results" onClick={clearSnowFallData}>
-          {searchedSnowFallData.map((resort, index) => {
+          {searchedSnowFallData.map((resort, index: number) => {
             return <SearchResult key={index} result={resort} />
           })}
         </div>

@@ -8,8 +8,9 @@ export interface IBaseProps {
 }
 
 export interface IHourlySnowFall {
-    time: string;
+    time: number | string;
     hourSnowFall: string;
+    snowFall: number;
 }
 
 export interface IiconCode{
