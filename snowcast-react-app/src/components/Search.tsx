@@ -43,10 +43,11 @@ interface IHourlyForecast {
 
 function Search() {
   const searchPlaceHolder = 'Search Ski Resorts';
-  const [searchQuery, setSearchQuery] = useState(searchPlaceHolder);
-  const [lastSearched, setLastSearched] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-  const [searchedSnowFallData, setSearchedSnowFallData] = useState<ISearchResultProps[]>([]);
+  const [ searchQuery, setSearchQuery ] = useState(searchPlaceHolder);
+  const [ lastSearched, setLastSearched ] = useState('');
+  const [ searchResults, setSearchResults ] = useState([]);
+  const [ searchedSnowFallData, setSearchedSnowFallData ] = useState<ISearchResultProps[]>([]);
+  const [ prevSearchResults, setPrevSearchResults ] = useState<ISearchResultProps[]>([]);
 
   const alreadyFetched = (array: ISearchResult[], resortName: string): boolean => {
     for (let i = 0; i < array.length; i++) {
@@ -78,6 +79,7 @@ function Search() {
         getResortSnowFall(resort)
           .then(newSnowFallData => {
               setSearchedSnowFallData(oldSnowFallData => [...oldSnowFallData, newSnowFallData]);
+              setPrevSearchResults(oldSnowFallData => [...oldSnowFallData, newSnowFallData]);
           });
       }
     });
@@ -165,16 +167,25 @@ function Search() {
     };
   };
   
-  const handleContentChange = (event: React.FormEvent<HTMLInputElement>) => setSearchQuery((event.target as HTMLInputElement).value);
+  const handleContentChange = (event: React.FormEvent<HTMLInputElement>) => {
+    if ((event.target as HTMLInputElement).value === lastSearched) {
+      setSearchedSnowFallData(prevSearchResults);
+    } else {
+      setSearchedSnowFallData([]);
+    }
+
+    setSearchQuery((event.target as HTMLInputElement).value);
+
+  };
 
   const getSearchResults = async (query: string) => {
-    // hideResorts();
+    setPrevSearchResults([]);
     setLastSearched(query);
     document.querySelectorAll('.SearchResult').forEach(element => element.remove());
-
+    
     const openCageApiKey = process.env.REACT_APP_OPEN_CAGE_API_KEY;
     const requestUrl = `https://api.opencagedata.com/geocode/v1/json?q=${query}&key=${openCageApiKey}&limit=10`;
-
+    
     console.log('Fetching from Open Cage API');
     const res = await fetch(requestUrl);
     const data = await res.json();
@@ -188,7 +199,7 @@ function Search() {
         flag: apiResult.annotations.flag
       }
     });
-
+    
     setSearchResults(newResults);
   }
 
@@ -200,15 +211,24 @@ function Search() {
     }
 
     (event.target as HTMLInputElement).style.color = 'black';
+
+    if (prevSearchResults.length && searchQuery === lastSearched) {
+      setSearchedSnowFallData(prevSearchResults);
+    }
   }
 
   const handleInputClickOff = (event: React.FocusEvent<HTMLInputElement>) => {
     if (searchQuery === '') {
       lastSearched ? setSearchQuery(lastSearched) : setSearchQuery(searchPlaceHolder);
     }
+
+    setSearchedSnowFallData([]);
   }
 
-  const clearSnowFallData = () => setSearchedSnowFallData([]);
+  const clearSnowFallData = () => {
+    setSearchedSnowFallData([]);
+    setPrevSearchResults([]);
+  };
 
   return (
     <div className="Search">
