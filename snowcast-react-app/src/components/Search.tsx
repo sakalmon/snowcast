@@ -221,8 +221,6 @@ function Search() {
     if (searchQuery === '') {
       lastSearched ? setSearchQuery(lastSearched) : setSearchQuery(searchPlaceHolder);
     }
-
-    setSearchedSnowFallData([]);
   }
 
   const clearSnowFallData = () => {
