@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Resort from './Resort';
 import '../assets/stylesheets/PopularResorts.scss';
@@ -6,7 +7,41 @@ import Search from './Search';
 import UnitSelector from '../components/UnitSelector';
 import type { IHourlySnowFall, IiconCode } from '../types';
 
+interface MyProps {
+
+}
+
+interface MyState {
+
+}
+
 function PopularResorts() {
+  class PopularResorts {
+    static popularResorts = [
+      'Perisher',
+      'Thredbo',
+      'Turoa',
+      'Whakapapa',
+      'Theodul',
+      'Las Lenas'
+    ];
+    
+    getAllSnowFall = (): ISnowFallData => {
+      const resortsFetched: string[] = [];
+      
+      PopularResorts.popularResorts.forEach(resortName => {    
+        if (!(resortsFetched.includes(resortName))) {
+          resortsFetched.push(resortName);
+          getLatLonCountry(resortName)
+            .then(({lat, lon, country, flag}) => getResortSnowFall({resortName, lat, lon, country, flag}))
+            .then(newSnowFallData => {
+                setSnowFallData(oldSnowFallData => [...oldSnowFallData, newSnowFallData]);
+            });
+        }      
+      });
+    };
+  }
+
   interface ISnowFallData {
     country: string;
     currentTemp: number;
@@ -22,20 +57,12 @@ function PopularResorts() {
   const [resortsVisible, setResortsVisible] = useState(true);
   const [unit, setUnit] = useState('C');
   
-  const getPopularSnowFall = () => {
-    const fetched: string[] = [];
-    const popularResorts = [
-      'Perisher',
-      'Thredbo',
-      'Turoa',
-      'Whakapapa',
-      'Theodul',
-      'Las Lenas',
-    ];
-
-    popularResorts.forEach(resortName => {    
-      if (!(fetched.includes(resortName))) {
-        fetched.push(resortName);
+  const getAllSnowFall = () => {
+    const resortsFetched: string[] = [];
+    
+    PopularResort.popularResorts.forEach(resortName => {    
+      if (!(resortsFetched.includes(resortName))) {
+        resortsFetched.push(resortName);
         getLatLonCountry(resortName)
           .then(({lat, lon, country, flag}) => getResortSnowFall({resortName, lat, lon, country, flag}))
           .then(newSnowFallData => {
@@ -173,7 +200,7 @@ function PopularResorts() {
 
   // const hideResorts = () => setResortsVisible(false);
 
-  useEffect(getPopularSnowFall, []);
+  useEffect(getAllSnowFall, []);
 
   interface IResortData {
     snowFall: string;
