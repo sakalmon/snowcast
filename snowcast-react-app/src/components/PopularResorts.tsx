@@ -107,16 +107,6 @@ function PopularResorts() {
         })
         .then((resortDetails) => this.getSnowFall(resortDetails.lat, resortDetails.lon))
         .then()
-
-      
-      // const resortsFetched: string[] = [];
-      // return resortNames
-      //   .filter((resortName: string) => !(resortsFetched.includes(resortName)))
-      //   .map(resortName => {
-      //     return getResortDetails(resortName)
-      //       .then(({lat, lon, country, flag}: ResortDetails) => getResortSnowFall({resortName, lat, lon, country, flag}))
-      //       .then((snowFall: SnowFall) => snowFall);
-      //   });
     };
 
     getResortDetails = async (resortName: string): Promise<IResortDetails> => {
@@ -135,58 +125,6 @@ function PopularResorts() {
       
       return { lat, lon, country, flag };
     }
-
-    getSnowFall = async (lat: number, lon: number): Promise<IResortSnowFall> => {
-      const openWeatherApiKey = process.env.REACT_APP_OPEN_WEATHER_API_KEY;
-      const requestUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${openWeatherApiKey}&units=metric`;
-  
-      console.log('Fetching from Open Weather API');
-
-      const res = await fetch(requestUrl);
-      const openWResponse: IOpenW = await res.json();
-
-      const hourlyData = openWResponse.hourly.slice(0, 24);
-  
-      const todaysSnowFall = this.getTodaysSnowFall(hourlyData);      
-      const hourlySnowFall = this.getHourlySnowFall(hourlyData);
-  
-      const eightDaySnowFall = this.getEightDaySnowFall(openWResponse);
-  
-      const convHourlySnowFall = hourlySnowFall.map(hourSnowFall => {
-        const epoch = hourSnowFall.time;
-        const dateObj = new Date(0);
-        dateObj.setUTCSeconds(epoch);
-        const time = dateObj.getHours();
-        let formattedTime = '';
-  
-        if (time >= 0 && time < 24) {
-          if (time === 12) {
-            formattedTime = '12pm';
-          } else if (time === 0) {
-            formattedTime = '12am';
-          } else if (time > 12) {
-            formattedTime = (time - 12).toString() + 'pm';
-          } else {
-            formattedTime = time.toString() + 'am';
-          }
-        }
-  
-        return {
-          time: formattedTime,
-          hourSnowFall: hourSnowFall.snowFall
-        };
-      })
-        
-      return {
-        ...newSnowFallData,
-        currentTemp: data.current.temp,
-        country: country,
-        iconCode: data.current.weather[0].icon,
-        hourlySnowFall: convHourlySnowFall,
-        eightDaySnowFall: eightDaySnowFall,
-        flag: flag
-      };
-    };
 
     getTodaysSnowFall = (hourlyData: IOpenWPeriodic[]) => {
       const todaysSnowFall = hourlyData
@@ -265,6 +203,59 @@ function PopularResorts() {
         }
       });
     }
+
+    getSnowFall = async (lat: number, lon: number): Promise<IResortSnowFall> => {
+      const openWeatherApiKey = process.env.REACT_APP_OPEN_WEATHER_API_KEY;
+      const requestUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${openWeatherApiKey}&units=metric`;
+  
+      console.log('Fetching from Open Weather API');
+
+      const res = await fetch(requestUrl);
+      const openWResponse: IOpenW = await res.json();
+
+      const hourlyData = openWResponse.hourly.slice(0, 24);
+  
+      const todaysSnowFall = this.getTodaysSnowFall(hourlyData);      
+      const hourlySnowFall = this.getHourlySnowFall(hourlyData);
+  
+      const eightDaySnowFall = this.getEightDaySnowFall(openWResponse);
+  
+      const convHourlySnowFall = hourlySnowFall.map(hourSnowFall => {
+        const epoch = hourSnowFall.time;
+        const dateObj = new Date(0);
+        dateObj.setUTCSeconds(epoch);
+        const time = dateObj.getHours();
+        let formattedTime = '';
+  
+        if (time >= 0 && time < 24) {
+          if (time === 12) {
+            formattedTime = '12pm';
+          } else if (time === 0) {
+            formattedTime = '12am';
+          } else if (time > 12) {
+            formattedTime = (time - 12).toString() + 'pm';
+          } else {
+            formattedTime = time.toString() + 'am';
+          }
+        }
+  
+        return {
+          time: formattedTime,
+          hourSnowFall: hourSnowFall.snowFall
+        };
+      })
+        
+      return {
+        ...newSnowFallData,
+        currentTemp: data.current.temp,
+        country: country,
+        iconCode: data.current.weather[0].icon,
+        hourlySnowFall: convHourlySnowFall,
+        eightDaySnowFall: eightDaySnowFall,
+        flag: flag
+      };
+    };
+  }
 
   interface ISnowFallData {
     country: string;
