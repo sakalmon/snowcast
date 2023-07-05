@@ -2,43 +2,42 @@ import Resort from '../components/Resort';
 import Search from '../components/Search';
 import { useLocation } from 'react-router-dom';
 import '../assets/stylesheets/ResortForecast.scss';
-import type { IResortForecast } from '../types';
+import { IResortDetails, IResortForecast } from '../types';
+import { SnowResort } from '../SnowResort';
 
 function ResortForecast() {
   const location = useLocation();
-  const { clickedResort }: { clickedResort: IResortForecast } = location.state;
-  const { resortName, country, snowFallToday, currentTemp, iconCode, hourlySnowFall, eightDaySnowFall, flag } = clickedResort;
+  const { resort }: { resort: SnowResort } = location.state;
 
-  console.log(hourlySnowFall);
+  const resortName = resort.name;
+  const country = (resort.details as IResortDetails).country;
+  const snowToday = (resort.forecast as IResortForecast).snowToday;
+  const currentTemp = (resort.forecast as IResortForecast).currentTemp;
+  const iconCode = (resort.forecast as IResortForecast).iconCode;
+  const hourlySnow = (resort.forecast as IResortForecast).hourlySnow;
+  const snowingHours = hourlySnow.filter(hourSnow => hourSnow.snow === 0);
+  const eightDaySnowFall = (resort.forecast as IResortForecast).eightDaySnow;
+  const flag = (resort.details as IResortDetails).flag;
 
   return (
     <div className="ResortForecast">
       <Search />
       <div className="resort-forecast-container">
-        <Resort
-          resortName={resortName}
-          country={country}
-          snowFallToday={snowFallToday}
-          eightDaySnowFall={eightDaySnowFall}
-          currentTemp={currentTemp}
-          iconCode={iconCode}
-          flag={flag}
-        />
-        {hourlySnowFall!.filter(hourSnowFall => hourSnowFall.time !== '').length > 0 && (
+        <Resort resort={resort} />
+
+        {/* Only display hourly snowfall if it snowed at least once */}
+        {snowingHours.length > 0 && (
           <section className="hourly-snowfall">
             <p>Snowfall Per Hour (mm) AEST</p>
             <div className="each-hour-container">
-              {hourlySnowFall!.map((hourSnowFall, index) => {
-                if (hourSnowFall.time) {
-                  return (
-                    <div key={index} className="each-hour">
-                      <p className="hour">{hourSnowFall.time}</p>
-                      <p className="hour-snowfall">{hourSnowFall.hourSnowFall}</p>
-                    </div>
-                  );                
-                } else {
-                  return ('');
-                }
+              {snowingHours.map((hour, index) => {
+                return (
+                  <div key={index} className="each-hour">
+                    <p className="hour">{hour.time}</p>
+                    <p className="hour-snowfall">{hour.snow}</p>
+                  </div>
+                );                
+                
               })}
             </div>
           </section>

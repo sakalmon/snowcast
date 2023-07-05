@@ -1,10 +1,16 @@
 import temperatureIcon from '../assets/temperature.png';
 import snowIcon from '../assets/snow.png';
 import '../assets/stylesheets/Resort.scss'
-import type { IResortObjProps } from '../types';
+import { SnowResort } from '../SnowResort';
+import type { IForecast, IResortDetails } from '../types';
 
-function Resort(props: IResortObjProps) {
-  const { resortName, snowFallToday, eightDaySnowFall, currentTemp, iconCode, flag } = props;
+function Resort({ resort }: { resort: SnowResort }) {
+  const resortName = resort.name;
+  const snowToday = (resort.forecast as IForecast).snowToday;
+  const eightDaySnowFall = (resort.forecast as IForecast).eightDaySnowFall;
+  const currentTemp = (resort.forecast as IForecast).currentTemp;
+  const iconCode = (resort.forecast as IForecast).iconCode;
+  const flag = (resort.details as IResortDetails).flag;
   const weatherIcon = `/weather_icons/${iconCode}.png`;
 
   return (
@@ -21,7 +27,7 @@ function Resort(props: IResortObjProps) {
           <div className="snow">
             <img className="snow-icon" src={snowIcon} alt="" />
             <div className="snow-num-unit">
-              <span className="snow-num">{snowFallToday}</span>
+              <span className="snow-num">{snowToday}</span>
               <span className="snow-unit">(mm)</span>
               <span className="snow-num">{eightDaySnowFall}</span>
               <span className="snow-unit">(mm)</span>
