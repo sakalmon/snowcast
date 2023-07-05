@@ -147,7 +147,7 @@ function Search() {
 
       return {
         time: formattedTime,
-        hourSnowFall: hourSnowFall.snowFall
+        hourSnowFall: hourSnowFall.snow
       };
     });
 

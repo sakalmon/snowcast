@@ -67,14 +67,14 @@ export class SnowResort {
     const currentTemp = this.getCurrentTemp(openWResponse);
     const iconCode = openWResponse.current.weather[0].icon;
     const snowToday = this.getTodaysSnowFall(openWResponse.hourly);
-    const hourlySnowFall = this.getHourlySnowFall(openWResponse.hourly);
+    const hourlySnow = this.getHourlySnowFall(openWResponse.hourly);
     const eightDaySnowFall = this.getEightDaySnowFall(openWResponse);
 
     return {
       currentTemp,
       iconCode,
       snowToday,
-      hourlySnowFall,
+      hourlySnow,
       eightDaySnowFall
     };
   };
@@ -134,6 +134,8 @@ export class SnowResort {
       .filter(day => {
         if (day.snow) {
           return day.snow > 0;
+        } else {
+          return false;
         }
       })
       .reduce((eightDaySnowFall, day) => {
@@ -177,14 +179,14 @@ export class SnowResort {
   getSnowFall = async (openWResponse: IOpenW): Promise<ISnowFall> => {
     const hourlyData = openWResponse.hourly.slice(0, 24);
 
-    const todaysSnowFall = this.getTodaysSnowFall(hourlyData)
-    const hourlySnowFall = this.getHourlySnowFall(hourlyData);
-    const timeFormattedHourlySnowFall = this.epochTo12Hr(hourlySnowFall);
+    const todaysSnow = this.getTodaysSnowFall(hourlyData)
+    const hourlySnow = this.getHourlySnowFall(hourlyData);
+    const timeFormattedHourlySnowFall = this.epochTo12Hr(hourlySnow);
     const eightDaySnowFall = this.getEightDaySnowFall(openWResponse);
 
     return {
-      snowToday: todaysSnowFall,
-      hourlySnowFall: timeFormattedHourlySnowFall,
+      snowToday: todaysSnow,
+      hourlySnow: timeFormattedHourlySnowFall,
       eightDaySnowFall: eightDaySnowFall
     };
   };
