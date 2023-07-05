@@ -4,17 +4,23 @@ import Resort from './Resort';
 import '../assets/stylesheets/PopularResorts.scss';
 import Search from './Search';
 import UnitSelector from '../components/UnitSelector';
-import type { IHourlySnowFall, IiconCode } from '../types';
+import type {
+  IHourlySnowFall, ITimeFormattedHourlySnowFall, IIconCode
+} from '../types';
 
-interface IForecast {
-  country: string;
-  currentTemp: number | null;
-  eightDaySnowFall: string;
-  flag: string;
-  hourlySnowFall: IHourlySnowFall;
-  iconCode: IiconCode | null;
-  resortName: string;
-  snowFall: string;
+type NewIconCode = '01d' | '01n' | '02d' | '02n' | '03d' | '03n' | '04d'
+  | '04n' | '09d' | '09n' | '10d' | '10n' | '11d' | '11n' | '13d' | '13n'
+  | '50d' | '50n';
+
+interface IForecast extends ISnowFall {
+  currentTemp: number;
+  iconCode: NewIconCode;
+}
+
+interface ISnowFall {
+  snowToday: number;
+  hourlySnowFall: ITimeFormattedHourlySnowFall[] | {};
+  eightDaySnowFall: number;
 }
 
 interface IResortDetails {
@@ -27,70 +33,63 @@ interface IResortDetails {
 interface IOpenW {
   lat: number;
   lon: number;
-  current: IOpenWPeriodic;
+  current: IOpenWCurrent;
   hourly: IOpenWHourly[];
   daily: IOpenWDaily[];
 }
 
-interface IOpenWPeriodic {
+interface IOpenWCurrent {
   dt: number;
   temp: number;
-  weather: {
-    icon: IiconCode;
-  }
+  weather: { icon: NewIconCode }[];
 }
 
-interface IOpenWDaily extends IOpenWPeriodic {  
+interface IOpenWDaily {
+  dt: number;
+  temp: number;
+  weather: { icon: NewIconCode }[];
   snow?: number;
 }
 
-interface IOpenWHourly extends IOpenWPeriodic {
+interface IOpenWHourly {
+  dt: number;
+  temp: number;
+  weather: { icon: NewIconCode }[];
   snow?: { 
     '1h': number;
   };
 }
 
-interface ISnowNext24Hours {
-  resortName: string;
-  snowFall: number;
-}
-
-interface ISnowFall {
-  snow: {
-    '1h': number
-  };
-}
-
-interface IDayData {
-  dt: number;
-  temp: {
-    day: number;
-  };
-  snow?: number;
-}
-
 function PopularResorts() {
-  class Forecast {
-    resortName: string;
-    forecast: IForecast;
-    resortDetails: IResortDetails | {};
+  class SnowResort {
+    name: string;
+    details: Promise<void | IResortDetails> | {};
+    openWResponse: Promise<void | IOpenW> | {};
+    forecast: IForecast | {};
 
     constructor(resortName: string) {
-      this.resortName = resortName;
-      this.resortDetails = {};
-      this.forecast = {
-        country: '',
-        currentTemp: null,
-        eightDaySnowFall: '',
-        flag: '',
-        hourlySnowFall: {},
-        iconCode: null,
-        resortName: '',
-        snowFall: ''
-      }
+      // Set initial resort attributes
+      this.name = resortName;
+      this.details = {};
+      this.openWResponse = {};
+      this.forecast = {};
+
+      // Populate attributes
+      this.getResortDetails(this.name)
+        .then(details => {
+          this.details = details;
+          return this.fetchOpenWeather(details.lat, details.lon)
+        })
+        .then(openWResponse => {
+          this.openWResponse = openWResponse;
+          return this.getForecast(openWResponse);
+        })
+        .then(forecast => {
+          this.forecast = forecast;
+        });
     }
 
-    static popularResorts = [
+    popularResorts = [
       'Perisher',
       'Thredbo',
       'Turoa',
@@ -98,20 +97,41 @@ function PopularResorts() {
       'Theodul',
       'Las Lenas'
     ];
-    
-    getForecast = (): Promise<IForecast> => {
-      this.getResortDetails(this.resortName)
-        .then((resortDetails: IResortDetails) => {
-          this.resortDetails = resortDetails
-          return resortDetails;
-        })
-        .then((resortDetails) => this.getSnowFall(resortDetails.lat, resortDetails.lon))
-        .then()
+
+    fetchOpenWeather = async (lat: number, lon: number): Promise<IOpenW> => {
+      const openWeatherApiKey = process.env.REACT_APP_OPEN_WEATHER_API_KEY;
+      const requestUrl = 
+        `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}\
+        &appid=${openWeatherApiKey}&units=metric`;
+  
+      console.log('Fetching from Open Weather API');
+
+      const res = await fetch(requestUrl);
+      const openWResponse: IOpenW = await res.json();
+
+      return openWResponse;
+    };
+
+    getForecast = (openWResponse: IOpenW): IForecast => {
+      const currentTemp = this.getCurrentTemp(openWResponse);
+      const iconCode = openWResponse.current.weather[0].icon;
+      const snowToday = this.getTodaysSnowFall(openWResponse.hourly);
+      const hourlySnowFall = this.getHourlySnowFall(openWResponse.hourly);
+      const eightDaySnowFall = this.getEightDaySnowFall(openWResponse);
+
+      return {
+        currentTemp,
+        iconCode,
+        snowToday,
+        hourlySnowFall,
+        eightDaySnowFall
+      };
     };
 
     getResortDetails = async (resortName: string): Promise<IResortDetails> => {
       const openCageApiKey = process.env.REACT_APP_OPEN_CAGE_API_KEY;
-      const requestUrl = `https://api.opencagedata.com/geocode/v1/json?q=${resortName}&key=${openCageApiKey}&limit=1`;
+      const requestUrl = `https://api.opencagedata.com/geocode/v1/json?\
+      q=${resortName}&key=${openCageApiKey}&limit=1`;
   
       console.log('Fetching from Open Cage API');
 
@@ -126,9 +146,9 @@ function PopularResorts() {
       return { lat, lon, country, flag };
     }
 
-    getTodaysSnowFall = (hourlyData: IOpenWPeriodic[]) => {
+    getTodaysSnowFall = (hourlyData: IOpenWHourly[]) => {
       const todaysSnowFall = hourlyData
-        .reduce((snowToday: number, hourlySnowFall) => {
+        .reduce((snowToday, hourlySnowFall) => {
           if (hourlySnowFall.snow) {
             return snowToday + hourlySnowFall.snow['1h'];
           } else {
@@ -140,19 +160,19 @@ function PopularResorts() {
       return Number(todaysSnowFall);
     };
 
-    getHourlySnowFall = (hourlyData: IOpenWPeriodic[]): IHourlySnowFall[] => {
+    getHourlySnowFall = (hourlyData: IOpenWHourly[]): IHourlySnowFall[] => {
       return hourlyData
         .slice(0, 24)
         .map((hourForecast) => {
           if (hourForecast.snow) {
             return {
               time: hourForecast.dt,
-              snowFall: hourForecast.snow['1h']
+              snow: hourForecast.snow['1h']
             };
           } else {
             return {
               time: hourForecast.dt,
-              snowFall: 0
+              snow: 0
             };
           }
         });
@@ -177,7 +197,8 @@ function PopularResorts() {
       return Number(eightDaySnowFall)
     }
 
-    epochTo12Hr = (hourlySnowFall: IHourlySnowFall[]) => {
+    epochTo12Hr = (hourlySnowFall: IHourlySnowFall[]):
+    ITimeFormattedHourlySnowFall[] => {
       return hourlySnowFall.map(hourSnowFall => {
         const epoch = hourSnowFall.time;
         const dateObj = new Date(0);
@@ -185,91 +206,46 @@ function PopularResorts() {
         const time = dateObj.getHours();
         let formattedTime = '';
   
-        if (time >= 0 && time < 24) {
-          if (time === 12) {
-            formattedTime = '12pm';
-          } else if (time === 0) {
-            formattedTime = '12am';
-          } else if (time > 12) {
-            formattedTime = (time - 12).toString() + 'pm';
-          } else {
-            formattedTime = time.toString() + 'am';
-          }
-
-          return {
-            time: formattedTime,
-            snowFall: hourSnowFall.snowFall
-          };
+        if (time === 12) {
+          formattedTime = '12pm';
+        } else if (time === 0) {
+          formattedTime = '12am';
+        } else if (time > 12) {
+          formattedTime = (time - 12).toString() + 'pm';
+        } else {
+          formattedTime = time.toString() + 'am';
         }
+
+        return {
+          time: formattedTime,
+          snow: hourSnowFall.snow
+        };
       });
     }
 
-    getSnowFall = async (lat: number, lon: number): Promise<IResortSnowFall> => {
-      const openWeatherApiKey = process.env.REACT_APP_OPEN_WEATHER_API_KEY;
-      const requestUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${openWeatherApiKey}&units=metric`;
-  
-      console.log('Fetching from Open Weather API');
-
-      const res = await fetch(requestUrl);
-      const openWResponse: IOpenW = await res.json();
-
+    getSnowFall = async (openWResponse: IOpenW): Promise<ISnowFall> => {
       const hourlyData = openWResponse.hourly.slice(0, 24);
   
-      const todaysSnowFall = this.getTodaysSnowFall(hourlyData);      
+      const todaysSnowFall = this.getTodaysSnowFall(hourlyData)
       const hourlySnowFall = this.getHourlySnowFall(hourlyData);
-  
+      const timeFormattedHourlySnowFall = this.epochTo12Hr(hourlySnowFall);
       const eightDaySnowFall = this.getEightDaySnowFall(openWResponse);
-  
-      const convHourlySnowFall = hourlySnowFall.map(hourSnowFall => {
-        const epoch = hourSnowFall.time;
-        const dateObj = new Date(0);
-        dateObj.setUTCSeconds(epoch);
-        const time = dateObj.getHours();
-        let formattedTime = '';
-  
-        if (time >= 0 && time < 24) {
-          if (time === 12) {
-            formattedTime = '12pm';
-          } else if (time === 0) {
-            formattedTime = '12am';
-          } else if (time > 12) {
-            formattedTime = (time - 12).toString() + 'pm';
-          } else {
-            formattedTime = time.toString() + 'am';
-          }
-        }
-  
-        return {
-          time: formattedTime,
-          hourSnowFall: hourSnowFall.snowFall
-        };
-      })
-        
+
       return {
-        ...newSnowFallData,
-        currentTemp: data.current.temp,
-        country: country,
-        iconCode: data.current.weather[0].icon,
-        hourlySnowFall: convHourlySnowFall,
-        eightDaySnowFall: eightDaySnowFall,
-        flag: flag
+        snowToday: todaysSnowFall,
+        hourlySnowFall: timeFormattedHourlySnowFall,
+        eightDaySnowFall: eightDaySnowFall
       };
     };
+
+    getCurrentTemp = (openWResponse: IOpenW) => {
+      return openWResponse.current.temp;
+    }
   }
 
-  interface ISnowFallData {
-    country: string;
-    currentTemp: number;
-    eightDaySnowFall: string;
-    flag: string;
-    hourlySnowFall: IHourlySnowFall;
-    iconCode: IiconCode;
-    resortName: string;
-    snowFall: string;
-  }
+  // ==========================================================================
 
   const [snowFallData, setSnowFallData] = useState<ISnowFallData[]>([]);
-  const [resortsVisible, setResortsVisible] = useState(true);
   const [unit, setUnit] = useState('C');
   
   const getAllSnowFall = () => {
@@ -286,14 +262,6 @@ function PopularResorts() {
       }      
     });
   };
-
-  interface IResortSnowFall {
-    resortName: string;
-    lat: number;
-    lon: number;
-    country: string;
-    flag: string;
-  }
 
   const getResortSnowFall = async ({ resortName, lat, lon, country, flag }: IResortSnowFall) => {
     const openWeatherApiKey = process.env.REACT_APP_OPEN_WEATHER_API_KEY;
@@ -398,34 +366,19 @@ function PopularResorts() {
     };
   };
 
-  // const hideResorts = () => setResortsVisible(false);
-
   useEffect(getAllSnowFall, []);
-
-  interface IResortData {
-    snowFall: string;
-    eightDaySnowFall: string[];
-    currentTemp: string;
-    iconCode: IiconCode;
-    hourlySnowFall: IHourlySnowFall;
-    resortName: string;
-    lat: number;
-    lon: number;
-    country: string;
-    flag: string;
-  }
 
   return (
     <div className="PopularResorts">
       <UnitSelector />
       <Search />
       <div className="resorts-container">
-        {resortsVisible && (snowFallData.map((forecast: ISnowFallData, index) => 
+        {(snowFallData.map((forecast: ISnowFallData, index) => 
           <Link key={index} to='/resort_forecast' state={{ clickedResort: {
             key: index, 
             resortName: forecast.resortName,
             country: forecast.country,
-            snowFallToday: forecast.snowFall,
+            snowToday: forecast.snowFall,
             eightDaySnowFall: forecast.eightDaySnowFall,
             currentTemp: forecast.currentTemp,
             iconCode: forecast.iconCode,
@@ -436,7 +389,7 @@ function PopularResorts() {
               key={index} 
               resortName={forecast.resortName}
               country={forecast.country}
-              snowFallToday={forecast.snowFall}
+              snowToday={forecast.snowFall}
               eightDaySnowFall={forecast.eightDaySnowFall}
               currentTemp={forecast.currentTemp}
               iconCode={forecast.iconCode}

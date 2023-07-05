@@ -3,16 +3,21 @@ export interface IBaseProps {
   country: string;
   currentTemp: number;
   eightDaySnowFall: string;
-  iconCode: IiconCode;
+  iconCode: IIconCode;
   flag: string;
 }
 
 export interface IHourlySnowFall {
   time: number;
-  snowFall?: number;
+  snow: number;
 }
 
-export interface IiconCode {
+export interface ITimeFormattedHourlySnowFall {
+  time: string;
+  snow: number;
+}
+
+export interface IIconCode {
   iconCode: '01d' | '01n' | '02d' | '02n' | '03d' | '03n' | '04d' | '04n' | '09d' | '09n' | '10d' | '10n' | '11d' | '11n' | '13d' | '13n' | '50d' | '50n';
 }
 
