@@ -16,15 +16,17 @@ function PopularResorts() {
 // Component Logic
 // =============================================================================
   // Data for all of our resorts
-  const [ resorts, setResorts ] = useState<SnowResort[]>([]);
+  // const [ resorts, setResorts ] = useState<SnowResort[]>([]);
   
   // For toggling temperature units
   const [unit, setUnit] = useState('C');
   
   // Instantiate and store all popular resorts
-  const allResorts: SnowResort[] = SnowResort.popularResorts
+  const resorts: SnowResort[] = SnowResort.popularResorts
     .map(resortName => new SnowResort(resortName));
-  setResorts(allResorts);
+
+  console.log(resorts)
+  // setResorts(allResorts);
 
   // const getAllSnowFall = () => {
   //   const resortsFetched: string[] = [];

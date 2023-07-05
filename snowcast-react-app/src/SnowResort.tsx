@@ -52,8 +52,7 @@ export class SnowResort {
   fetchOpenWeather = async (lat: number, lon: number): Promise<IOpenW> => {
     const openWeatherApiKey = process.env.REACT_APP_OPEN_WEATHER_API_KEY;
     const requestUrl = 
-      `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}\
-      &appid=${openWeatherApiKey}&units=metric`;
+      `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${openWeatherApiKey}&units=metric`;
 
     console.log('Fetching from Open Weather API');
 
@@ -81,8 +80,7 @@ export class SnowResort {
 
   getResortDetails = async (resortName: string): Promise<IResortDetails> => {
     const openCageApiKey = process.env.REACT_APP_OPEN_CAGE_API_KEY;
-    const requestUrl = `https://api.opencagedata.com/geocode/v1/json?\
-    q=${resortName}&key=${openCageApiKey}&limit=1`;
+    const requestUrl = `https://api.opencagedata.com/geocode/v1/json?q=${resortName}&key=${openCageApiKey}&limit=1`;
 
     console.log('Fetching from Open Cage API');
 
@@ -99,6 +97,7 @@ export class SnowResort {
 
   getTodaysSnowFall = (hourlyData: IOpenWHourly[]) => {
     const todaysSnowFall = hourlyData
+      .slice(0, 24)
       .reduce((snowToday, hourlySnowFall) => {
         if (hourlySnowFall.snow) {
           return snowToday + hourlySnowFall.snow['1h'];
