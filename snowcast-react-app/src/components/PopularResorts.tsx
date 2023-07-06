@@ -40,7 +40,7 @@ function PopularResorts() {
     Promise.all(allResortData).then(a => {
       const allResortData: IResortData[] = a.map(resortData => {
         return {
-          name: resortData.name, 
+          name: resortData.name,
           details: resortData.details,
           forecast: resortData.forecast
         };

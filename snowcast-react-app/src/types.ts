@@ -5,7 +5,7 @@ export type IIconCode = '01d' | '01n' | '02d' | '02n' | '03d' | '03n' | '04d'
 export interface IResortData {
   name: string;
   details: IResortDetails;
-  forecast: IForecast | {};
+  forecast: IForecast;
 }
 
 export interface IHourlySnowFall {
@@ -25,7 +25,7 @@ export interface IForecast extends ISnowFall {
 
 export interface ISnowFall {
   snowToday: number;
-  hourlySnow: ITimeFormattedHourlySnowFall[] | {};
+  hourlySnow: ITimeFormattedHourlySnowFall[];
   eightDaySnowFall: number;
 }
 

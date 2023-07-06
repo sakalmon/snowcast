@@ -8,17 +8,24 @@ function ResortForecast() {
   const location = useLocation();
   const { resort }: { resort: IResortData } = location.state;
 
-  const hourlySnow = (resort.forecast as IResortForecast).hourlySnow;
-  const snowingHours = hourlySnow.filter(hourSnow => hourSnow.snow !== 0);
+  // if (Object.keys(resort.forecast)) {
+  //   hourlySnow = resort.forecast.hourlySnow;
+  // }
+  // const snowingHours = hourlySnow.filter(hourSnow => hourSnow.snow !== 0);
+
+  const snowingHours = resort.forecast.hourlySnow.filter(hour => {
+    return hour.snow !== 0;
+  });
+
+  /* Only display hourly snowfall if it will snow */
+  let willSnow = snowingHours.length > 0;
 
   return (
     <div className="ResortForecast">
       <Search />
       <div className="resort-forecast-container">
         <Resort resort={resort} />
-
-        {/* Only display hourly snowfall if it snowed at least once */}
-        {snowingHours.length > 0 && (
+        {willSnow && (
           <section className="hourly-snowfall">
             <p>Snowfall Per Hour (mm) AEST</p>
             <div className="each-hour-container">
