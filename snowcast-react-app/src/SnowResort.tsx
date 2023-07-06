@@ -5,7 +5,7 @@ import type {
   IOpenW,
   IForecast,
   IOpenWHourly,
-  ISnowFall,
+  IOpenC,
   IResortData
 } from './types';
 
@@ -69,6 +69,17 @@ export class SnowResort {
         }
       });
   }
+
+  fetchOpenCage = async (limit: number = 1): Promise<IOpenC> => {
+    const openCageApiKey = process.env.REACT_APP_OPEN_CAGE_API_KEY;
+    const requestUrl = `https://api.opencagedata.com/geocode/v1/json?q=${this.query}&key=${openCageApiKey}&limit=${limit}`;
+    
+    console.log('Fetching from Open Cage API');
+    const res = await fetch(requestUrl);
+    const data: IOpenC = await res.json();
+
+    return data;
+  }
   
   fetchOpenWeather = async (lat: number, lon: number): Promise<IOpenW> => {
     const openWeatherApiKey = process.env.REACT_APP_OPEN_WEATHER_API_KEY;
@@ -101,13 +112,7 @@ export class SnowResort {
   };
 
   getResortDetails = async (resortName: string): Promise<IResortDetails> => {
-    const openCageApiKey = process.env.REACT_APP_OPEN_CAGE_API_KEY;
-    const requestUrl = `https://api.opencagedata.com/geocode/v1/json?q=${resortName}&key=${openCageApiKey}&limit=1`;
-
-    console.log('Fetching from Open Cage API');
-
-    const res = await fetch(requestUrl);
-    const data = await res.json();
+    this.fetchOpenCage()
 
     const lat = data.results[0].geometry.lat;
     const lon = data.results[0].geometry.lng;      

@@ -89,3 +89,17 @@ export interface IResortForecast extends IBaseProps {
   snowToday: string;
   hourlySnow: IHourlySnowFall[];
 }
+
+export interface IOpenC {
+  results: IOpenCResult[];
+}
+
+export interface IOpenCResult {
+  annotations: { flag: string };
+  components: { country: string };
+  formatted: string;
+  geometry: {
+    lat: number;
+    lng: number;
+  }
+}

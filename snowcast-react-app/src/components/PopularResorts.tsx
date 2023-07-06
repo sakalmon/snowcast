@@ -16,14 +16,14 @@ const createResorts = (): SnowResort[] => {
   );
 }
 
-const getAllResortData = (resorts: SnowResort[]) => {
+export const getAllResortData = (resorts: SnowResort[]) => {
   return resorts.map(resort => resort.getResortData());
 };
 
-function PopularResorts() {
 // =============================================================================
 // Component Logic
 // =============================================================================
+function PopularResorts() {
   // Data for all of our resorts
   const [ resorts, setResorts ] = useState<IResortData[]>([]);
 

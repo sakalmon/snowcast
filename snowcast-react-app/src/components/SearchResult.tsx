@@ -1,15 +1,12 @@
 import { Link } from 'react-router-dom';
-import type { ISearchResultProps, IResortObjProps } from '../types';
+import type { IResortData } from '../types';
 
-function SearchResult(props: { result: ISearchResultProps }) {
-  const searchResult: ISearchResultProps | IResortObjProps = Object.assign({snowFallToday: props.result.snowFall}, props.result);
-
+function SearchResult({ resort }: { resort: IResortData }) {
   return (
     <div className="SearchResult">
-      <Link
-        to="/resort_forecast"
-        state={{ clickedResort: searchResult }}
-      >{props.result.resortName}</Link>
+      <Link to="/resort_forecast" state={{ clickedResort: resort }}>
+        {resort.name}
+      </Link>
     </div>
   );
 }
