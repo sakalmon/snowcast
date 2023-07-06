@@ -5,7 +5,8 @@ import type {
   IOpenW,
   IForecast,
   IOpenWHourly,
-  ISnowFall
+  ISnowFall,
+  IResortData
 } from './types';
 
 export class SnowResort {
@@ -22,18 +23,18 @@ export class SnowResort {
     this.forecast = {};
 
     // Populate attributes
-    this.getResortDetails(this.name)
-      .then(details => {
-        this.details = details;
-        return this.fetchOpenWeather(details.lat, details.lon)
-      })
-      .then(openWResponse => {
-        this.openWResponse = openWResponse;
-        return this.getForecast(openWResponse);
-      })
-      .then(forecast => {
-        this.forecast = forecast;
-      });
+    // this.getResortDetails(this.name)
+    //   .then(details => {
+    //     this.details = details;
+    //     return this.fetchOpenWeather(details.lat, details.lon)
+    //   })
+    //   .then(openWResponse => {
+    //     this.openWResponse = openWResponse;
+    //     return this.getForecast(openWResponse);
+    //   })
+    //   .then(forecast => {
+    //     this.forecast = forecast;
+    //   });
   }
 
   // Resorts for home page
@@ -49,6 +50,26 @@ export class SnowResort {
 // =============================================================================
 // Class Methods
 // =============================================================================
+  getResortData = async (): Promise<IResortData> => {
+    return this.getResortDetails(this.name)
+      .then(details => {
+        this.details = details;
+        return this.fetchOpenWeather(details.lat, details.lon)
+      })
+      .then(openWResponse => {
+        this.openWResponse = openWResponse;
+        return this.getForecast(openWResponse);
+      })
+      .then(forecast => {
+        this.forecast = forecast;
+        return {
+          name: this.name,
+          details: this.details as IResortDetails,
+          forecast: this.forecast as IForecast
+        }
+      });
+  }
+  
   fetchOpenWeather = async (lat: number, lon: number): Promise<IOpenW> => {
     const openWeatherApiKey = process.env.REACT_APP_OPEN_WEATHER_API_KEY;
     const requestUrl = 

@@ -1,10 +1,9 @@
 import temperatureIcon from '../assets/temperature.png';
 import snowIcon from '../assets/snow.png';
 import '../assets/stylesheets/Resort.scss'
-import { SnowResort } from '../SnowResort';
-import type { IForecast, IResortDetails } from '../types';
+import type { IForecast, IResortDetails, IResortData } from '../types';
 
-function Resort({ resort }: { resort: SnowResort }) {
+function Resort({ resort }: { resort: IResortData }) {
   const resortName = resort.name;
   const snowToday = (resort.forecast as IForecast).snowToday;
   const eightDaySnowFall = (resort.forecast as IForecast).eightDaySnowFall;

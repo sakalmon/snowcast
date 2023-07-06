@@ -5,27 +5,52 @@ import '../assets/stylesheets/PopularResorts.scss';
 import Search from './Search';
 import UnitSelector from '../components/UnitSelector';
 import { SnowResort } from '../SnowResort';
+import type { IResortData, IResortDetails } from '../types';
 
 // =============================================================================
-// Types/Interfaces
+// Function Definitions
 // =============================================================================
+const createResorts = (): SnowResort[] => {
+  return SnowResort.popularResorts.map(resortName =>
+    new SnowResort(resortName)
+  );
+}
 
+const getAllResortData = (resorts: SnowResort[]) => {
+  return resorts.map(resort => resort.getResortData());
+};
 
 function PopularResorts() {
 // =============================================================================
 // Component Logic
 // =============================================================================
   // Data for all of our resorts
-  // const [ resorts, setResorts ] = useState<SnowResort[]>([]);
-  
-  // For toggling temperature units
-  const [unit, setUnit] = useState('C');
-  
-  // Instantiate and store all popular resorts
-  const resorts: SnowResort[] = SnowResort.popularResorts
-    .map(resortName => new SnowResort(resortName));
+  const [ resorts, setResorts ] = useState<IResortData[]>([]);
 
-  console.log(resorts)
+  // For toggling temperature units
+  const [ unit, setUnit ] = useState('C');
+
+  // Instantiate and store all popular resorts
+  console.log(resorts);
+  useEffect(() => {
+    const resortObjs = createResorts();
+    const allResortData = getAllResortData(resortObjs);
+    console.log(resorts);
+
+    Promise.all(allResortData).then(a => {
+      const allResortData: IResortData[] = a.map(resortData => {
+        return {
+          name: resortData.name, 
+          details: resortData.details,
+          forecast: resortData.forecast
+        };
+      });
+
+      setResorts(allResortData)
+    });
+
+  }, []);
+  
   // setResorts(allResorts);
 
   // const getAllSnowFall = () => {
@@ -156,7 +181,7 @@ function PopularResorts() {
       <UnitSelector />
       <Search />
       <div className="resorts-container">
-        {(resorts.map((resort: SnowResort, index) => 
+        {(resorts.map((resort, index) => 
           <Link key={index} to='/resort_forecast' state={{ resort }}>
             <Resort resort={resort} />
           </Link>
