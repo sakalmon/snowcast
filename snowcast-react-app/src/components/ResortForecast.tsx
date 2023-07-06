@@ -2,15 +2,14 @@ import Resort from '../components/Resort';
 import Search from '../components/Search';
 import { useLocation } from 'react-router-dom';
 import '../assets/stylesheets/ResortForecast.scss';
-import { IResortForecast } from '../types';
-import { SnowResort } from '../SnowResort';
+import { IResortForecast, IResortData } from '../types';
 
 function ResortForecast() {
   const location = useLocation();
-  const { resort }: { resort: SnowResort } = location.state;
+  const { resort }: { resort: IResortData } = location.state;
 
   const hourlySnow = (resort.forecast as IResortForecast).hourlySnow;
-  const snowingHours = hourlySnow.filter(hourSnow => hourSnow.snow === 0);
+  const snowingHours = hourlySnow.filter(hourSnow => hourSnow.snow !== 0);
 
   return (
     <div className="ResortForecast">
