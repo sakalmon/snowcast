@@ -15,11 +15,6 @@ const getSearchResults = (query: string): IResortData[] | [] => {
   return searchObj.getResults();
 }
 
-const clearSnowFallData = () => {
-  setSearchedSnowFallData([]);
-  setPrevSearchResults([]);
-};
-
 const handleContentChange = (event: React.FormEvent<HTMLInputElement>) => {
   setSearchQuery((event.target as HTMLInputElement).value);
 };
@@ -34,7 +29,7 @@ const handleInputClick = (event: React.MouseEvent<HTMLInputElement>) => {
 
 const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
   if (searchQuery === '') {
-    lastSearched ? setSearchQuery(lastSearched) : setSearchQuery(searchPlaceHolder);
+    setSearchQuery(searchPlaceHolder);
   }
 }
 
@@ -68,7 +63,6 @@ function Search() {
           <form onSubmit={handleSearch}>
             <i className="fa-solid fa-magnifying-glass fa-xl"></i>
             <input
-              ref={inputRef}
               type="text"
               onChange={handleContentChange}
               value={searchQuery}
@@ -80,7 +74,7 @@ function Search() {
             <div></div>
           </form>
         </div>
-        <div className="search-results" onClick={clearSnowFallData}>
+        <div className="search-results">
           {showResults && searchResults.map((resort, index: number) => {
             return <SearchResult key={index} resort={resort} />
           })}
