@@ -1,8 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import SearchResult from './SearchResult';
 import '../assets/stylesheets/Search.scss';
 import '../assets/stylesheets/SearchResult.scss';
-import { SnowResort } from '../SnowResort';
 import { SearchObj } from '../SearchObj';
 import type { IResortData } from '../types';
 
@@ -11,63 +10,85 @@ import type { IResortData } from '../types';
 // =============================================================================
 const getSearchResults = (query: string): IResortData[] | [] => {
   const searchObj = new SearchObj(query);
-
   return searchObj.getResults();
 }
 
-const handleContentChange = (event: React.FormEvent<HTMLInputElement>) => {
-  setSearchQuery((event.target as HTMLInputElement).value);
+const handleContentChange = (
+  event: React.FormEvent<HTMLInputElement>,
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>
+  ) => {
+    setSearchQuery((event.target as HTMLInputElement).value);
 };
 
-const handleInputClick = (event: React.MouseEvent<HTMLInputElement>) => {
-  if (searchQuery === searchPlaceHolder) {
+const handleInputClick = (
+  event: React.MouseEvent<HTMLInputElement>,
+  searchQuery: string,
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>,
+  setSearchColor: React.Dispatch<React.SetStateAction<'grey' | 'black'>>
+  ) => {
+  if (searchQuery === 'Search Ski Resorts') {
     setSearchQuery('');
   }
-
   setSearchColor('black');
 }
 
-const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+const handleInputBlur = (
+  event: React.FocusEvent<HTMLInputElement>,
+  searchQuery: string,
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>
+  ) => {
   if (searchQuery === '') {
-    setSearchQuery(searchPlaceHolder);
+    setSearchQuery('Search Ski Resorts');
   }
 }
 
-const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
+const handleSearch = (
+  event: React.FormEvent<HTMLFormElement>,
+  searchQuery: string,
+  setSearchResults: React.Dispatch<React.SetStateAction<IResortData[]>>
+  ) => {
   event.preventDefault();
   const searchResults = getSearchResults(searchQuery)
   setSearchResults(searchResults);
 };
 
+function Search() {
 // =============================================================================
 // State Hooks
 // =============================================================================
-const searchPlaceHolder = 'Search Ski Resorts';
-const [ searchQuery, setSearchQuery ] = useState(searchPlaceHolder);
-const [ searchResults, setSearchResults ] = useState<IResortData[]>([]);
-const [ showResults, setShowResults ] = useState(true);
-const [ searchColor, setSearchColor ] = useState<'grey' | 'black'>('grey');
+  const [ searchQuery, setSearchQuery ] = useState('Search Ski Resorts');
+  const [ searchResults, setSearchResults ] = useState<IResortData[]>([]);
+  const [ showResults, setShowResults ] = useState(true);
+  const [ searchColor, setSearchColor ] = useState<'grey' | 'black'>('grey');
 
-// =============================================================================
-// Component Logic
-// =============================================================================
-function Search() {
 // =============================================================================
 // Component JSX
 // =============================================================================
-
   return (
     <div className="Search">
       <div className="search-container">
         <div className="search-box">
-          <form onSubmit={handleSearch}>
+          <form onSubmit={event => handleSearch(
+            event,
+            searchQuery,
+            setSearchResults
+          )}>
             <i className="fa-solid fa-magnifying-glass fa-xl"></i>
             <input
               type="text"
-              onChange={handleContentChange}
+              onChange={event => handleContentChange(event, setSearchQuery)}
               value={searchQuery}
-              onClick={handleInputClick}
-              onBlur={handleInputBlur} 
+              onClick={event => handleInputClick(
+                event,
+                searchQuery,
+                setSearchQuery,
+                setSearchColor
+              )}
+              onBlur={event => handleInputBlur(
+                event,
+                searchQuery,
+                setSearchQuery
+              )} 
               style={{ color: searchColor }}
             />
             <button>Search</button>
