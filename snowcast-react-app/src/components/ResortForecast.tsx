@@ -1,6 +1,6 @@
+import { useLocation } from 'react-router-dom';
 import Resort from '../components/Resort';
 import SearchBox from './SearchBox';
-import { useLocation } from 'react-router-dom';
 import '../assets/stylesheets/ResortForecast.scss';
 import { IResortData } from '../types/allTypes';
 

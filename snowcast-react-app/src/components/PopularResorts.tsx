@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Resort from './Resort';
-import '../assets/stylesheets/PopularResorts.scss';
 import SearchBox from './SearchBox';
 import UnitSelector from '../components/UnitSelector';
 import { SnowResort } from '../classes/SnowResort';
+import '../assets/stylesheets/PopularResorts.scss';
 import type { IResortData } from '../types/allTypes';
 
 /*==============================================================================
