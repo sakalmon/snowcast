@@ -70,9 +70,9 @@ export class SnowResort {
       });
   }
 
-  fetchOpenCage = async (limit: number = 1): Promise<IOpenC> => {
+  fetchOpenCage = async (resortName: string, limit: number = 1): Promise<IOpenC> => {
     const openCageApiKey = process.env.REACT_APP_OPEN_CAGE_API_KEY;
-    const requestUrl = `https://api.opencagedata.com/geocode/v1/json?q=${this.query}&key=${openCageApiKey}&limit=${limit}`;
+    const requestUrl = `https://api.opencagedata.com/geocode/v1/json?q=${resortName}&key=${openCageApiKey}&limit=${limit}`;
     
     console.log('Fetching from Open Cage API');
     const res = await fetch(requestUrl);
@@ -112,7 +112,7 @@ export class SnowResort {
   };
 
   getResortDetails = async (resortName: string): Promise<IResortDetails> => {
-    this.fetchOpenCage()
+    const data = await this.fetchOpenCage(resortName);
 
     const lat = data.results[0].geometry.lat;
     const lon = data.results[0].geometry.lng;      
