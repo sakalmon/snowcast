@@ -53,7 +53,7 @@ const handleSearch = (
   setSearchResults: React.Dispatch<React.SetStateAction<IResortData[]>>
   ) => {
   console.log('handling search')
-  event.preventDefault();  
+  event.preventDefault();
   getSearchResults(searchQuery)
     .then(searchResults => setSearchResults(searchResults));
 };

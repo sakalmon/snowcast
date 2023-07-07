@@ -2,22 +2,17 @@ import Resort from '../components/Resort';
 import Search from '../components/Search';
 import { useLocation } from 'react-router-dom';
 import '../assets/stylesheets/ResortForecast.scss';
-import { IResortForecast, IResortData } from '../types';
+import { IResortData } from '../types';
 
 function ResortForecast() {
   const location = useLocation();
   const { resort }: { resort: IResortData } = location.state;
 
-  // if (Object.keys(resort.forecast)) {
-  //   hourlySnow = resort.forecast.hourlySnow;
-  // }
-  // const snowingHours = hourlySnow.filter(hourSnow => hourSnow.snow !== 0);
-
   const snowingHours = resort.forecast.hourlySnow.filter(hour => {
     return hour.snow !== 0;
   });
 
-  /* Only display hourly snowfall if it will snow */
+  // Only display hourly snowfall if it will snow
   let willSnow = snowingHours.length > 0;
 
   return (
