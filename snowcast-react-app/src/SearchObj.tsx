@@ -28,23 +28,17 @@ export class SearchObj {
     return data;
   }
 
-  getResults = (): IResortData[] | [] => {
-    let results: IResortData[] | [] = [];
-
-    this.fetchOpenCage(10).then(openCResponse => {
-      this.openCResponse = openCResponse;
-
-      const resorts = openCResponse.results.map(result => {
-        return new SnowResort(result.formatted)
+  getResults = async (): Promise<IResortData[]> => {
+    return this.fetchOpenCage(10)
+      .then(openCResponse => {
+        this.openCResponse = openCResponse;
+        const resorts = openCResponse.results.map(result => {
+          return new SnowResort(result.formatted)
+        });
+        return getAllResortData(resorts);
+      })
+      .then(allResortData => {
+        return Promise.all(allResortData)
       });
-      
-      const allResortData = getAllResortData(resorts);
-
-      Promise.all(allResortData).then(a => {
-        results = a;
-      });
-    });
-
-    return results;
   }
 }

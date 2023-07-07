@@ -40,11 +40,11 @@ export class SnowResort {
   // Resorts for home page
   static popularResorts = [
     'Perisher',
-    'Thredbo',
-    'Turoa',
-    'Whakapapa',
-    'Theodul',
-    'Las Lenas'
+    // 'Thredbo',
+    // 'Turoa',
+    // 'Whakapapa',
+    // 'Theodul',
+    // 'Las Lenas'
   ];
 
 // =============================================================================

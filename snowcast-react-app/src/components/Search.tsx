@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SearchResult from './SearchResult';
 import '../assets/stylesheets/Search.scss';
 import '../assets/stylesheets/SearchResult.scss';
@@ -8,8 +8,13 @@ import type { IResortData } from '../types';
 // =============================================================================
 // Function Definitions
 // =============================================================================
-const getSearchResults = (query: string): IResortData[] | [] => {
+const getSearchResults = async (query: string): Promise<IResortData[]> => {
+  console.log('getting search results');
+  
   const searchObj = new SearchObj(query);
+
+  console.log(searchObj);
+
   return searchObj.getResults();
 }
 
@@ -47,9 +52,10 @@ const handleSearch = (
   searchQuery: string,
   setSearchResults: React.Dispatch<React.SetStateAction<IResortData[]>>
   ) => {
-  event.preventDefault();
-  const searchResults = getSearchResults(searchQuery)
-  setSearchResults(searchResults);
+  console.log('handling search')
+  event.preventDefault();  
+  getSearchResults(searchQuery)
+    .then(searchResults => setSearchResults(searchResults));
 };
 
 function Search() {

@@ -31,11 +31,9 @@ function PopularResorts() {
   const [ unit, setUnit ] = useState('C');
 
   // Instantiate and store all popular resorts
-  console.log(resorts);
   useEffect(() => {
     const resortObjs = createResorts();
     const allResortData = getAllResortData(resortObjs);
-    console.log(resorts);
 
     Promise.all(allResortData).then(a => {
       const allResortData: IResortData[] = a.map(resortData => {
