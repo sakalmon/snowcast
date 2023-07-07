@@ -1,8 +1,8 @@
 import Resort from '../components/Resort';
-import Search from '../components/Search';
+import SearchBox from './SearchBox';
 import { useLocation } from 'react-router-dom';
 import '../assets/stylesheets/ResortForecast.scss';
-import { IResortData } from '../types';
+import { IResortData } from '../types/allTypes';
 
 /*==============================================================================
   Function Definitions
@@ -29,7 +29,7 @@ function ResortForecast() {
   ============================================================================*/
   return (
     <div className="ResortForecast">
-      <Search />
+      <SearchBox />
       <div className="resort-forecast-container">
         <Resort resort={resort} />
         {willSnow && (

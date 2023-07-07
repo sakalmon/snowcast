@@ -1,7 +1,7 @@
 import temperatureIcon from '../assets/temperature.png';
 import snowIcon from '../assets/snow.png';
 import '../assets/stylesheets/Resort.scss'
-import type { IForecast, IResortDetails, IResortData } from '../types';
+import type { IForecast, IResortDetails, IResortData } from '../types/allTypes';
 
 /*==============================================================================
   Functional Component

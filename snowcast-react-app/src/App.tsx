@@ -2,7 +2,7 @@ import './App.scss';
 import Header from './components/Header';
 import Navigation from './components/Navigation';
 import PopularResorts from './components/PopularResorts';
-import Search from './components/Search';
+import Search from './components/SearchBox';
 import ResortForecast from './components/ResortForecast';
 import { Routes, Route } from 'react-router-dom';
 

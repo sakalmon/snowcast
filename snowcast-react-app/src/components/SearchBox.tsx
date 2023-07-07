@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import SearchResult from './SearchResult';
 import '../assets/stylesheets/Search.scss';
 import '../assets/stylesheets/SearchResult.scss';
-import { SearchObj } from '../SearchObj';
-import type { IResortData } from '../types';
+import { SearchObj } from '../classes/Search';
+import type { IResortData } from '../types/allTypes';
 
 /*==============================================================================
   Function Definitions
@@ -56,7 +56,7 @@ const handleSearch = (
 /*==============================================================================
   Functional Component
 ==============================================================================*/
-function Search() {
+function SearchBox() {
   /*============================================================================
     State Hooks
   ============================================================================*/
@@ -109,4 +109,4 @@ function Search() {
   );
 }
 
-export default Search;
+export default SearchBox;

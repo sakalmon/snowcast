@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Resort from './Resort';
 import '../assets/stylesheets/PopularResorts.scss';
-import Search from './Search';
+import SearchBox from './SearchBox';
 import UnitSelector from '../components/UnitSelector';
-import { SnowResort } from '../SnowResort';
-import type { IResortData, IResortDetails } from '../types';
+import { SnowResort } from '../classes/SnowResort';
+import type { IResortData } from '../types/allTypes';
 
 /*==============================================================================
   Function Definitions
@@ -54,7 +54,7 @@ function PopularResorts() {
   return (
     <div className="PopularResorts">
       <UnitSelector />
-      <Search />
+      <SearchBox />
       <div className="resorts-container">
         {(resorts.map((resort, index) => 
           <Link key={index} to='/resort_forecast' state={{ resort }}>

@@ -7,7 +7,7 @@ import type {
   IOpenWHourly,
   IOpenC,
   IResortData
-} from './types';
+} from '../types/allTypes';
 
 export class SnowResort {
   name: string;

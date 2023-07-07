@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import type { IResortData } from '../types';
+import type { IResortData } from '../types/allTypes';
 
 function SearchResult({ resort }: { resort: IResortData }) {
   return (

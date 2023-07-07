@@ -1,6 +1,6 @@
 import { SnowResort } from './SnowResort';
-import { getAllResortData } from './components/PopularResorts';
-import { IResortData, IOpenC } from './types';
+import { getAllResortData } from '../components/PopularResorts';
+import { IResortData, IOpenC } from '../types/allTypes';
 
 export class SearchObj {
   query: string;
