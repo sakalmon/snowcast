@@ -4,17 +4,29 @@ import { useLocation } from 'react-router-dom';
 import '../assets/stylesheets/ResortForecast.scss';
 import { IResortData } from '../types';
 
+/*==============================================================================
+  Function Definitions
+==============================================================================*/
+const getSnowingHours = (resort: IResortData) => {
+  return resort.forecast.hourlySnow.filter(hour => hour.snow !== 0);
+}
+
+/*==============================================================================
+  Functional Component
+==============================================================================*/
 function ResortForecast() {
   const location = useLocation();
   const { resort }: { resort: IResortData } = location.state;
 
-  const snowingHours = resort.forecast.hourlySnow.filter(hour => {
-    return hour.snow !== 0;
-  });
+  // Hours where snowfall occurs
+  const snowingHours = getSnowingHours(resort)
 
   // Only display hourly snowfall if it will snow
-  let willSnow = snowingHours.length > 0;
+  const willSnow = snowingHours.length > 0;
 
+  /*============================================================================
+    Component JSX
+  ============================================================================*/
   return (
     <div className="ResortForecast">
       <Search />

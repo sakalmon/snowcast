@@ -21,20 +21,6 @@ export class SnowResort {
     this.details = {};
     this.openWResponse = {};
     this.forecast = {};
-
-    // Populate attributes
-    // this.getResortDetails(this.name)
-    //   .then(details => {
-    //     this.details = details;
-    //     return this.fetchOpenWeather(details.lat, details.lon)
-    //   })
-    //   .then(openWResponse => {
-    //     this.openWResponse = openWResponse;
-    //     return this.getForecast(openWResponse);
-    //   })
-    //   .then(forecast => {
-    //     this.forecast = forecast;
-    //   });
   }
 
   // Resorts for home page
@@ -47,9 +33,9 @@ export class SnowResort {
     // 'Las Lenas'
   ];
 
-// =============================================================================
-// Class Methods
-// =============================================================================
+/*==============================================================================
+  Method definitions
+==============================================================================*/
   getResortData = async (): Promise<IResortData> => {
     return this.getResortDetails(this.name)
       .then(details => {
@@ -77,7 +63,6 @@ export class SnowResort {
     console.log('Fetching from Open Cage API');
     const res = await fetch(requestUrl);
     const data: IOpenC = await res.json();
-
     return data;
   }
   
@@ -87,10 +72,8 @@ export class SnowResort {
       `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${openWeatherApiKey}&units=metric`;
 
     console.log('Fetching from Open Weather API');
-
     const res = await fetch(requestUrl);
     const openWResponse: IOpenW = await res.json();
-
     return openWResponse;
   };
 
@@ -133,7 +116,6 @@ export class SnowResort {
         }
       }, 0)
       .toFixed(2);
-
     return Number(todaysSnowFall);
   };
 
@@ -172,7 +154,6 @@ export class SnowResort {
         }
       }, 0)
       .toFixed(2);
-
     return Number(eightDaySnowFall)
   }
 
@@ -194,30 +175,12 @@ export class SnowResort {
       } else {
         formattedTime = time.toString() + 'am';
       }
-
+      
       return {
         time: formattedTime,
         snow: hourSnowFall.snow
       };
     });
   }
-
-  // getSnowFall = async (openWResponse: IOpenW): Promise<ISnowFall> => {
-  //   const hourlyData = openWResponse.hourly.slice(0, 24);
-
-  //   const todaysSnow = this.getTodaysSnowFall(hourlyData)
-  //   const hourlySnow = this.getHourlySnowFall(hourlyData);
-  //   const timeFormattedHourlySnowFall = this.epochTo12Hr(hourlySnow);
-  //   const eightDaySnowFall = this.getEightDaySnowFall(openWResponse);
-
-  //   return {
-  //     snowToday: todaysSnow,
-  //     hourlySnow: timeFormattedHourlySnowFall,
-  //     eightDaySnowFall: eightDaySnowFall
-  //   };
-  // };
-
-  getCurrentTemp = (openWResponse: IOpenW) => {
-    return openWResponse.current.temp;
-  }
+  getCurrentTemp = (openWResponse: IOpenW) => openWResponse.current.temp;
 }

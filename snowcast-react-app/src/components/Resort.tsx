@@ -3,7 +3,11 @@ import snowIcon from '../assets/snow.png';
 import '../assets/stylesheets/Resort.scss'
 import type { IForecast, IResortDetails, IResortData } from '../types';
 
+/*==============================================================================
+  Functional Component
+==============================================================================*/
 function Resort({ resort }: { resort: IResortData }) {
+  // Data to be displayed for each resort
   const resortName = resort.name;
   const snowToday = (resort.forecast as IForecast).snowToday;
   const eightDaySnowFall = (resort.forecast as IForecast).eightDaySnowFall;
@@ -12,6 +16,9 @@ function Resort({ resort }: { resort: IResortData }) {
   const flag = (resort.details as IResortDetails).flag;
   const weatherIcon = `/weather_icons/${iconCode}.png`;
 
+  /*============================================================================
+    Component JSX
+  ============================================================================*/
   return (
     <div className="Resort">
       <div className="name-flag">
