@@ -2,7 +2,7 @@ import { useLocation } from 'react-router-dom';
 import Resort from '../components/Resort';
 import SearchBox from './SearchBox';
 import '../assets/stylesheets/ResortForecast.scss';
-import { IResortData, ITempUnit } from '../types/allTypes';
+import { IResortData, IUnits } from '../types/allTypes';
 
 /*==============================================================================
   Function Definitions
@@ -16,9 +16,9 @@ const getSnowingHours = (resort: IResortData) => {
 ==============================================================================*/
 function ResortForecast() {
   const location = useLocation();
-  const { resort, tempUnit }: {
+  const { resort, units }: {
     resort: IResortData;
-    tempUnit: ITempUnit;
+    units: IUnits;
   } = location.state;
 
   // Hours where snowfall occurs
@@ -34,7 +34,7 @@ function ResortForecast() {
     <div className="ResortForecast">
       <SearchBox />
       <div className="resort-forecast-container">
-        <Resort resort={resort} tempUnit={tempUnit}/>
+        <Resort resort={resort} units={units}/>
         {willSnow && (
           <section className="hourly-snowfall">
             <p>Snowfall Per Hour (mm) AEST</p>

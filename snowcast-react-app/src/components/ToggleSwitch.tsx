@@ -1,21 +1,12 @@
 import '../assets/stylesheets/ToggleSwitch.scss';
-import type { ITempUnit } from '../types/allTypes';
-
-/*==============================================================================
-  Event Handlers
-==============================================================================*/
-const handleUnitChange = (tempUnit: ITempUnit) => {
-  if (tempUnit.unit === 'C') {
-    tempUnit.setUnit('F');
-  } else {
-    tempUnit.setUnit('C');
-  }
-}
 
 /*==============================================================================
   Functional Component
 ==============================================================================*/
-function ToggleSwitch({ tempUnit }: {tempUnit: ITempUnit}) {
+function ToggleSwitch({ checked, updateUnit }: {
+  checked: boolean;
+  updateUnit: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}) {
   /*============================================================================
     Component JSX
   ============================================================================*/
@@ -24,8 +15,8 @@ function ToggleSwitch({ tempUnit }: {tempUnit: ITempUnit}) {
       <label className="switch">
       <input
         type="checkbox"
-        checked={tempUnit.unit === 'F'}
-        onChange={event => handleUnitChange(tempUnit)}
+        checked={checked}
+        onChange={updateUnit}
       />
       <span className="slider round" />
       </label>

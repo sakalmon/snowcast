@@ -104,7 +104,13 @@ export interface IOpenCResult {
   }
 }
 
-export interface ITempUnit {
-  unit: 'C' | 'F';
-  setUnit: React.Dispatch<React.SetStateAction<'C' | 'F'>>;
+export interface IUnits {
+  temp: {
+    tempUnit: 'C' | 'F';
+    setTempUnit: React.Dispatch<React.SetStateAction<'C' | 'F'>>;
+  };
+  height: {
+    heightUnit: 'mm' | 'Inches';
+    setHeightUnit: React.Dispatch<React.SetStateAction<'mm' | 'Inches'>>;
+  };
 }

@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Resort from './Resort';
 import SearchBox from './SearchBox';
-import UnitSelector from './TempUnitSelector';
+import TempUnitSelector from './TempUnitSelector';
+import HeightUnitSelector from './HeightUnitSelector';
 import { SnowResort } from '../classes/SnowResort';
 import '../assets/stylesheets/PopularResorts.scss';
 import type { IResortData } from '../types/allTypes';
@@ -27,8 +28,20 @@ function PopularResorts() {
   // Data for all of our resorts
   const [ resorts, setResorts ] = useState<IResortData[]>([]);
 
-  // Temperature unit
-  const [ unit, setUnit ] = useState<'C' | 'F'>('C');
+  // For temperature and snowfall height conversions
+  const [ tempUnit, setTempUnit ] = useState<'C' | 'F'>('C');
+  const [ heightUnit, setHeightUnit ] = useState<'mm' | 'Inches'>('mm');
+
+  const units = {
+    temp: {
+      tempUnit,
+      setTempUnit
+    },
+    height: {
+      heightUnit,
+      setHeightUnit
+    }
+  };
 
   // Get the forecast of all of our popular resorts and store in state
   useEffect(() => {
@@ -53,12 +66,13 @@ function PopularResorts() {
   ============================================================================*/
   return (
     <div className="PopularResorts">
-      <UnitSelector tempUnit={{unit, setUnit}} />
+      <TempUnitSelector units={units} />
+      <HeightUnitSelector units={units} />
       <SearchBox />
       <div className="resorts-container">
         {(resorts.map((resort, index) => 
           <Link key={index} to='/resort_forecast' state={{ resort }}>
-            <Resort resort={resort} tempUnit={{unit, setUnit}}/>
+            <Resort resort={resort} units={units}/>
           </Link>
         ))}
       </div>

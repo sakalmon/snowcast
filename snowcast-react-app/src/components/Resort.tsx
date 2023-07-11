@@ -2,14 +2,14 @@ import { celsiusToF } from './TempUnitSelector';
 import temperatureIcon from '../assets/temperature.png';
 import snowIcon from '../assets/snow.png';
 import '../assets/stylesheets/Resort.scss'
-import type { IResortData, ITempUnit } from '../types/allTypes';
+import type { IResortData, IUnits } from '../types/allTypes';
 
 /*==============================================================================
   Functional Component
 ==============================================================================*/
-function Resort({ resort, tempUnit }: {
+function Resort({ resort, units }: {
   resort: IResortData;
-  tempUnit: ITempUnit;
+  units: IUnits;
 }) {
   // Data to be displayed for each resort
   const resortName = resort.name;
@@ -20,7 +20,7 @@ function Resort({ resort, tempUnit }: {
   const weatherIcon = `/weather_icons/${iconCode}.png`;
   let currentTemp;
   
-  if (tempUnit.unit === 'C') {
+  if (units.temp.tempUnit === 'C') {
     currentTemp = resort.forecast.currentTemp;
   } else {
     currentTemp = celsiusToF(resort.forecast.currentTemp);
@@ -53,7 +53,7 @@ function Resort({ resort, tempUnit }: {
             <img className="temp-icon" src={temperatureIcon} alt="" />
             <div className="temp-num-unit">
               <span className="temp-num">{currentTemp}</span>
-              <span className="temp-unit">&deg;{tempUnit.unit}</span>
+              <span className="temp-unit">&deg;{units.temp.tempUnit}</span>
             </div>
           </div>
         </div>        
