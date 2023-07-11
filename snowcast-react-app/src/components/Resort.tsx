@@ -53,7 +53,7 @@ function Resort({ resort, tempUnit }: {
             <img className="temp-icon" src={temperatureIcon} alt="" />
             <div className="temp-num-unit">
               <span className="temp-num">{currentTemp}</span>
-              <span className="temp-unit">(&deg;{tempUnit.unit})</span>
+              <span className="temp-unit">&deg;{tempUnit.unit}</span>
             </div>
           </div>
         </div>        
