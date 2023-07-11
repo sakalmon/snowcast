@@ -53,13 +53,12 @@
   
     .snow-temp {
       display: flex;
-      justify-content: space-evenly;
+      justify-content: space-between;
   
       .temp, .snow {
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 20px;
       }
     }
   
@@ -69,8 +68,11 @@
 
     .temp-num-unit, .snow-num-unit {
       display: flex;
-      flex-direction: column;
       align-items: center;
+    }
+
+    .snow-num-unit {
+      flex-direction: column;      
     }
   }
 
