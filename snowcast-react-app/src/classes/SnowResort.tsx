@@ -78,7 +78,7 @@ export class SnowResort {
   };
 
   getForecast = (openWResponse: IOpenW): IForecast => {
-    const currentTemp = this.getCurrentTemp(openWResponse);
+    const currentTemp = Number(this.getCurrentTemp(openWResponse).toFixed());
     const iconCode = openWResponse.current.weather[0].icon;
     const snowToday = this.getTodaysSnowFall(openWResponse.hourly);
     const epochHourlySnow = this.getHourlySnowFall(openWResponse.hourly);

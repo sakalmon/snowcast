@@ -1,16 +1,10 @@
 import '../assets/stylesheets/ToggleSwitch.scss';
-import type { IUnit } from '../types/allTypes';
-
-/*==============================================================================
-  Function Definitions
-==============================================================================*/
-const celsiusToF = (celsius: number) => celsius * 1.8 + 32;
-const fahrenheitToC = (fahrenheit: number) => (fahrenheit - 32) * 5 / 9;
+import type { ITempUnit } from '../types/allTypes';
 
 /*==============================================================================
   Event Handlers
 ==============================================================================*/
-const handleUnitChange = (tempUnit: IUnit) => {
+const handleUnitChange = (tempUnit: ITempUnit) => {
   if (tempUnit.unit === 'C') {
     tempUnit.setUnit('F');
   } else {
@@ -21,7 +15,7 @@ const handleUnitChange = (tempUnit: IUnit) => {
 /*==============================================================================
   Functional Component
 ==============================================================================*/
-function ToggleSwitch({ tempUnit }: {tempUnit: IUnit}) {
+function ToggleSwitch({ tempUnit }: {tempUnit: ITempUnit}) {
   /*============================================================================
     Component JSX
   ============================================================================*/

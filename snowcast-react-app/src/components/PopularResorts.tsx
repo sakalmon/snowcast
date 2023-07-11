@@ -28,7 +28,7 @@ function PopularResorts() {
   const [ resorts, setResorts ] = useState<IResortData[]>([]);
 
   // Temperature unit
-  const [ unit, setUnit ] = useState('C');
+  const [ unit, setUnit ] = useState<'C' | 'F'>('C');
 
   // Get the forecast of all of our popular resorts and store in state
   useEffect(() => {
@@ -58,7 +58,7 @@ function PopularResorts() {
       <div className="resorts-container">
         {(resorts.map((resort, index) => 
           <Link key={index} to='/resort_forecast' state={{ resort }}>
-            <Resort resort={resort} />
+            <Resort resort={resort} tempUnit={{unit, setUnit}}/>
           </Link>
         ))}
       </div>

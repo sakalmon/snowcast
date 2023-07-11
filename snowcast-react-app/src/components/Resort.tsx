@@ -1,20 +1,30 @@
+import { celsiusToF } from './UnitSelector';
 import temperatureIcon from '../assets/temperature.png';
 import snowIcon from '../assets/snow.png';
 import '../assets/stylesheets/Resort.scss'
-import type { IForecast, IResortDetails, IResortData } from '../types/allTypes';
+import type { IResortData, ITempUnit } from '../types/allTypes';
 
 /*==============================================================================
   Functional Component
 ==============================================================================*/
-function Resort({ resort }: { resort: IResortData }) {
+function Resort({ resort, tempUnit }: {
+  resort: IResortData;
+  tempUnit: ITempUnit;
+}) {
   // Data to be displayed for each resort
   const resortName = resort.name;
-  const snowToday = (resort.forecast as IForecast).snowToday;
-  const eightDaySnowFall = (resort.forecast as IForecast).eightDaySnowFall;
-  const currentTemp = (resort.forecast as IForecast).currentTemp;
-  const iconCode = (resort.forecast as IForecast).iconCode;
-  const flag = (resort.details as IResortDetails).flag;
+  const snowToday = resort.forecast.snowToday;
+  const eightDaySnowFall = resort.forecast.eightDaySnowFall;
+  const iconCode = resort.forecast.iconCode;
+  const flag = resort.details.flag;
   const weatherIcon = `/weather_icons/${iconCode}.png`;
+  let currentTemp;
+  
+  if (tempUnit.unit === 'C') {
+    currentTemp = resort.forecast.currentTemp;
+  } else {
+    currentTemp = celsiusToF(resort.forecast.currentTemp);
+  }
 
   /*============================================================================
     Component JSX
@@ -43,7 +53,7 @@ function Resort({ resort }: { resort: IResortData }) {
             <img className="temp-icon" src={temperatureIcon} alt="" />
             <div className="temp-num-unit">
               <span className="temp-num">{currentTemp}</span>
-              <span className="temp-unit">(&deg;C)</span>
+              <span className="temp-unit">(&deg;{tempUnit.unit})</span>
             </div>
           </div>
         </div>        

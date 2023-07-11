@@ -104,7 +104,7 @@ export interface IOpenCResult {
   }
 }
 
-export interface IUnit {
-  unit: string;
-  setUnit: React.Dispatch<React.SetStateAction<string>>;
+export interface ITempUnit {
+  unit: 'C' | 'F';
+  setUnit: React.Dispatch<React.SetStateAction<'C' | 'F'>>;
 }
