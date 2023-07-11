@@ -52,12 +52,21 @@
     }
   
     .snow-temp {
-      display: flex;
-      justify-content: space-between;
+      // display: flex;
+      // justify-content: space-between;
+      display: grid;
+      gap: 3rem;
+      grid-template-columns: 1fr 1fr;
   
-      .temp, .snow {
+      .snow {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .temp {
+        display: flex;
+        justify-content: space-between;
         align-items: center;
       }
     }
