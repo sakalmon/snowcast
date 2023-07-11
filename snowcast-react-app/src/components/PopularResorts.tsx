@@ -66,15 +66,19 @@ function PopularResorts() {
   ============================================================================*/
   return (
     <div className="PopularResorts">
-      <TempUnitSelector units={units} />
-      <HeightUnitSelector units={units} />
-      <SearchBox />
-      <div className="resorts-container">
-        {(resorts.map((resort, index) => 
-          <Link key={index} to='/resort_forecast' state={{ resort }}>
-            <Resort resort={resort} units={units}/>
-          </Link>
-        ))}
+      <div className="transparent-layer">
+        <div className="units">
+          <TempUnitSelector units={units} />
+          <HeightUnitSelector units={units} />
+        </div>
+        <SearchBox />
+        <div className="resorts-container">
+          {(resorts.map((resort, index) => 
+            <Link key={index} to='/resort_forecast' state={{ resort }}>
+              <Resort resort={resort} units={units} />
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );

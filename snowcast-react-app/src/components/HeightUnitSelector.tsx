@@ -18,7 +18,7 @@ function HeightUnitSelector({ units }: {units: IUnits}) {
   }
 
   return (
-    <div className="TempUnitSelector">
+    <div className="HeightUnitSelector">
       <span>mm</span>
       <ToggleSwitch checked={units.height.heightUnit === 'Inches'} updateUnit={updateHeightUnit} />
       <span>Inches</span>
