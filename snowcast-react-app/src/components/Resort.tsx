@@ -1,4 +1,4 @@
-import { celsiusToF } from './UnitSelector';
+import { celsiusToF } from './TempUnitSelector';
 import temperatureIcon from '../assets/temperature.png';
 import snowIcon from '../assets/snow.png';
 import '../assets/stylesheets/Resort.scss'

@@ -1,5 +1,5 @@
-import ToggleSwitch from '../components/ToggleSwitch';
-import '../assets/stylesheets/UnitSelector.scss';
+import ToggleSwitch from './ToggleSwitch';
+import '../assets/stylesheets/TempUnitSelector.scss';
 import type { ITempUnit } from '../types/allTypes';
 
 /*==============================================================================
@@ -12,7 +12,7 @@ export const fahrenheitToC = (fahrenheit: number) => {
 
 function UnitSelector({ tempUnit }: {tempUnit: ITempUnit}) {
   return (
-    <div className="UnitSelector">
+    <div className="TempUnitSelector">
       <span>C</span>
       <ToggleSwitch tempUnit={tempUnit} />
       <span>F</span>
