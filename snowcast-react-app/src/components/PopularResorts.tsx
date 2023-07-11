@@ -27,7 +27,7 @@ function PopularResorts() {
   // Data for all of our resorts
   const [ resorts, setResorts ] = useState<IResortData[]>([]);
 
-  // For toggling temperature units
+  // Temperature unit
   const [ unit, setUnit ] = useState('C');
 
   // Get the forecast of all of our popular resorts and store in state
@@ -53,7 +53,7 @@ function PopularResorts() {
   ============================================================================*/
   return (
     <div className="PopularResorts">
-      <UnitSelector />
+      <UnitSelector tempUnit={{unit, setUnit}} />
       <SearchBox />
       <div className="resorts-container">
         {(resorts.map((resort, index) => 

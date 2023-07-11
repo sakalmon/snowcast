@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import '../assets/stylesheets/ToggleSwitch.scss';
+import type { IUnit } from '../types/allTypes';
 
 /*==============================================================================
   Function Definitions
@@ -10,20 +10,18 @@ const fahrenheitToC = (fahrenheit: number) => (fahrenheit - 32) * 5 / 9;
 /*==============================================================================
   Event Handlers
 ==============================================================================*/
-const handleUnitChange = (
-  isFahrenheit: boolean,
-  setIsFahrenheit: React.Dispatch<React.SetStateAction<boolean>>
-) => setIsFahrenheit(!isFahrenheit);
+const handleUnitChange = (tempUnit: IUnit) => {
+  if (tempUnit.unit === 'C') {
+    tempUnit.setUnit('F');
+  } else {
+    tempUnit.setUnit('C');
+  }
+}
 
 /*==============================================================================
   Functional Component
 ==============================================================================*/
-function ToggleSwitch() {
-  /*============================================================================
-    State Hooks
-  ============================================================================*/
-  const [ isFahrenheit, setIsFahrenheit ] = useState(false);
-
+function ToggleSwitch({ tempUnit }: {tempUnit: IUnit}) {
   /*============================================================================
     Component JSX
   ============================================================================*/
@@ -32,10 +30,10 @@ function ToggleSwitch() {
       <label className="switch">
       <input
         type="checkbox"
-        checked={isFahrenheit}
-        onChange={event => handleUnitChange(isFahrenheit, setIsFahrenheit)}
+        checked={tempUnit.unit === 'F'}
+        onChange={event => handleUnitChange(tempUnit)}
       />
-      <span className="slider round"></span>
+      <span className="slider round" />
       </label>
     </div>
   );

@@ -103,3 +103,8 @@ export interface IOpenCResult {
     lng: number;
   }
 }
+
+export interface IUnit {
+  unit: string;
+  setUnit: React.Dispatch<React.SetStateAction<string>>;
+}
