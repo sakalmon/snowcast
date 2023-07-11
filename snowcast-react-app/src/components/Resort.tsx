@@ -1,6 +1,5 @@
 import { celsiusToF } from './TempUnitSelector';
 import { mmToInches } from './HeightUnitSelector';
-import temperatureIcon from '../assets/temperature.png';
 import snowIcon from '../assets/snow.png';
 import '../assets/stylesheets/Resort.scss'
 import type { IResortData, IUnits } from '../types/allTypes';
@@ -8,10 +7,7 @@ import type { IResortData, IUnits } from '../types/allTypes';
 /*==============================================================================
   Functional Component
 ==============================================================================*/
-function Resort({ resort, units }: {
-  resort: IResortData;
-  units: IUnits;
-}) {
+function Resort({ resort, units }: {resort: IResortData; units: IUnits}) {
   // Data to be displayed for each resort
   const resortName = resort.name;
   let snowToday: number | string = resort.forecast.snowToday;
@@ -19,8 +15,10 @@ function Resort({ resort, units }: {
   const iconCode = resort.forecast.iconCode;
   const flag = resort.details.flag;
   const weatherIcon = `/weather_icons/${iconCode}.png`;
+  const weatherDesc = resort.forecast.weatherDesc;
   let currentTemp;
   
+  // Unit conversions
   if (units.temp.tempUnit === 'C') {
     currentTemp = resort.forecast.currentTemp;
   } else {
@@ -41,33 +39,28 @@ function Resort({ resort, units }: {
         <p className="name">{resortName}</p>
         <p className="flag">{flag}</p>
       </div>
-      <section className="weather-icon">
-        <img src={weatherIcon} alt="" />
+      <section className="current-weather">
+        <div className="weather-icon-status">
+          <img className="weather-icon" src={weatherIcon} alt="" />
+          <span className="weather-status">{weatherDesc}</span>
+        </div>
+        <div className="temp">
+          <span className="temp-num">{currentTemp}&deg;</span>
+        </div>
       </section>
       <section className="forecast-details">
         <div className="snow-temp">
-          <div className="snow">
-            <img className="snow-icon" src={snowIcon} alt="" />
-            <div className="snow-num-unit">
-              <div className="snow-today">
-                <span className="snow-num">{snowToday}</span>
-                <span className="snow-unit">
-                  {units.height.heightUnit + '(24hr)'}
-                </span>
-              </div>
-              <div className="snow-8-day">
-                <span className="snow-num">{eightDaySnowFall}</span>
-                <span className="snow-unit">
-                  {units.height.heightUnit + '(8 days)'}
-                </span>
-              </div>
+          <img className="snow-icon" src={snowIcon} alt="" />
+          <div className="snow-today">
+            <span className="heading">24 Hrs</span>
+            <div className="snow-today-container">
+              <span className="snow-num">{snowToday}</span>
             </div>
           </div>
-          <div className="temp">
-            <img className="temp-icon" src={temperatureIcon} alt="" />
-            <div className="temp-num-unit">
-              <span className="temp-num">{currentTemp}</span>
-              <span className="temp-unit">&deg;{units.temp.tempUnit}</span>
+          <div className="snow-8-day">
+            <span className="heading">8 Days</span>
+            <div className="snow-8-day-container">
+              <span className="snow-num">{eightDaySnowFall}</span>
             </div>
           </div>
         </div>        

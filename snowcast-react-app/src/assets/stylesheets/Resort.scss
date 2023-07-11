@@ -44,49 +44,73 @@
       margin: 0;
     }
   
-    span {
-      color: black;
-    }
-  
+    
     .snow-temp {
       display: grid;
-      gap: 1rem;
-      grid-template-columns: 1fr 1fr;
-  
+      grid-template-columns: 1fr 1fr 1fr;
+      
       .snow {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .temp {
-        display: flex;
-        justify-content: space-between;
+        justify-content: space-evenly;
         align-items: center;
       }
     }
-  
-    .temp-icon, .snow-icon{
-      width: 50px;
-    }
-
+    
     .temp-num-unit, .snow-num-unit {
       display: flex;
       align-items: center;
     }
-
+    
     .snow-num-unit {
-      flex-direction: column;      
+      border: 1px solid black;
     }
   }
-
-  .weather-icon {
+  
+  .current-weather {
     display: flex;
     justify-content: center;
   }
-
+  
   .snow-today, .snow-8-day {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 0.25rem;
+  }
+  
+  .heading {
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .temp {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .temp-icon {
+    width: 3rem;
+  }
+
+  .snow-icon {
+    width: 3rem;
+  }
+
+  span {
+    color: black;
+  }
+
+  .temp-num {
+    font-size: 2rem;
+  }
+
+  .weather-icon {
+    width: 7rem;
+  }
+
+  .weather-icon-status {
+    display: flex;
+    flex-direction: column;
   }
 }

@@ -21,6 +21,7 @@ export interface ITimeFormattedHourlySnowFall {
 export interface IForecast extends ISnowFall {
   currentTemp: number;
   iconCode: IIconCode;
+  weatherDesc: string;
 }
 
 export interface ISnowFall {
@@ -47,7 +48,10 @@ export interface IOpenW {
 export interface IOpenWCurrent {
   dt: number;
   temp: number;
-  weather: { icon: IIconCode }[];
+  weather: {
+    icon: IIconCode;
+    description: string;
+  }[];
 }
 
 export interface IOpenWDaily {
