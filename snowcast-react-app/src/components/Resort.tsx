@@ -1,4 +1,5 @@
 import { celsiusToF } from './TempUnitSelector';
+import { mmToInches } from './HeightUnitSelector';
 import temperatureIcon from '../assets/temperature.png';
 import snowIcon from '../assets/snow.png';
 import '../assets/stylesheets/Resort.scss'
@@ -13,8 +14,8 @@ function Resort({ resort, units }: {
 }) {
   // Data to be displayed for each resort
   const resortName = resort.name;
-  const snowToday = resort.forecast.snowToday;
-  const eightDaySnowFall = resort.forecast.eightDaySnowFall;
+  let snowToday: number | string = resort.forecast.snowToday;
+  let eightDaySnowFall: number | string = resort.forecast.eightDaySnowFall;
   const iconCode = resort.forecast.iconCode;
   const flag = resort.details.flag;
   const weatherIcon = `/weather_icons/${iconCode}.png`;
@@ -24,6 +25,11 @@ function Resort({ resort, units }: {
     currentTemp = resort.forecast.currentTemp;
   } else {
     currentTemp = celsiusToF(resort.forecast.currentTemp);
+  }
+
+  if (units.height.heightUnit === 'Inches') {
+    snowToday = mmToInches(snowToday).toFixed(2);
+    eightDaySnowFall = mmToInches(eightDaySnowFall).toFixed(2);
   }
 
   /*============================================================================
@@ -43,10 +49,18 @@ function Resort({ resort, units }: {
           <div className="snow">
             <img className="snow-icon" src={snowIcon} alt="" />
             <div className="snow-num-unit">
-              <span className="snow-num">{snowToday}</span>
-              <span className="snow-unit">(mm)</span>
-              <span className="snow-num">{eightDaySnowFall}</span>
-              <span className="snow-unit">(mm)</span>
+              <div className="snow-today">
+                <span className="snow-num">{snowToday}</span>
+                <span className="snow-unit">
+                  {units.height.heightUnit + '(24hr)'}
+                </span>
+              </div>
+              <div className="snow-8-day">
+                <span className="snow-num">{eightDaySnowFall}</span>
+                <span className="snow-unit">
+                  {units.height.heightUnit + '(8 days)'}
+                </span>
+              </div>
             </div>
           </div>
           <div className="temp">

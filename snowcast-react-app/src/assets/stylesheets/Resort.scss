@@ -49,10 +49,8 @@
     }
   
     .snow-temp {
-      // display: flex;
-      // justify-content: space-between;
       display: grid;
-      gap: 3rem;
+      gap: 1rem;
       grid-template-columns: 1fr 1fr;
   
       .snow {
@@ -85,5 +83,10 @@
   .weather-icon {
     display: flex;
     justify-content: center;
+  }
+
+  .snow-today, .snow-8-day {
+    display: flex;
+    gap: 0.25rem;
   }
 }
