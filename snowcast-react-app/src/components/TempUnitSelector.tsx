@@ -1,6 +1,6 @@
 import ToggleSwitch from './ToggleSwitch';
 import '../assets/stylesheets/TempUnitSelector.scss';
-import type { IUnits } from '../types/allTypes';
+import type { ITemp } from '../types/allTypes';
 
 /*==============================================================================
   Function Definitions
@@ -10,16 +10,16 @@ export const fahrenheitToC = (fahrenheit: number) => {
   return ((fahrenheit - 32) * 5 / 9).toFixed();
 };
 
-function TempUnitSelector({ units }: {units: IUnits}) {
+function TempUnitSelector({ unit, setUnit }: ITemp) {
   const updateTempUnit = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      units.temp.setTempUnit('F');
+      setUnit('F');
     } else {
-      units.temp.setTempUnit('C');
+      setUnit('C');
     }
   }
 
-  const checked = units.temp.tempUnit === 'F';
+  const checked = unit === 'F';
 
   return (
     <div className="TempUnitSelector">

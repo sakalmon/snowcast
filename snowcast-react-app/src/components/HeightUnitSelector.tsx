@@ -1,6 +1,6 @@
 import ToggleSwitch from './ToggleSwitch';
 import '../assets/stylesheets/HeightUnitSelector.scss';
-import type { IUnits } from '../types/allTypes';
+import type { IHeight } from '../types/allTypes';
 
 /*==============================================================================
   Function Definitions
@@ -8,19 +8,19 @@ import type { IUnits } from '../types/allTypes';
 export const mmToInches = (mm: number) => mm / 25.4;
 export const inchesToMM = (inches: number) => inches * 25.4;
 
-function HeightUnitSelector({ units }: {units: IUnits}) {
+function HeightUnitSelector({ unit, setUnit }: IHeight) {
   const updateHeightUnit = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      units.height.setHeightUnit('Inches');
+      setUnit('Inches');
     } else {
-      units.height.setHeightUnit('mm');
+      setUnit('mm');
     }
   }
 
   return (
     <div className="HeightUnitSelector">
       <span>mm</span>
-      <ToggleSwitch checked={units.height.heightUnit === 'Inches'} updateUnit={updateHeightUnit} />
+      <ToggleSwitch checked={unit === 'Inches'} updateUnit={updateHeightUnit} />
       <span>Inches</span>
     </div>
   );

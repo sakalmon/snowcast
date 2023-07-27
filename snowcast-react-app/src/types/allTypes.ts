@@ -2,6 +2,10 @@ export type IIconCode = '01d' | '01n' | '02d' | '02n' | '03d' | '03n' | '04d'
   | '04n' | '09d' | '09n' | '10d' | '10n' | '11d' | '11n' | '13d' | '13n'
   | '50d' | '50n';
 
+export type ITempUnit = 'C' | 'F';
+
+export type IHeightUnit = 'mm' | 'Inches';
+
 export interface IResortData {
   name: string;
   details: IResortDetails;
@@ -108,13 +112,13 @@ export interface IOpenCResult {
   }
 }
 
-export interface IUnits {
-  temp: {
-    tempUnit: 'C' | 'F';
-    setTempUnit: React.Dispatch<React.SetStateAction<'C' | 'F'>>;
-  };
-  height: {
-    heightUnit: 'mm' | 'Inches';
-    setHeightUnit: React.Dispatch<React.SetStateAction<'mm' | 'Inches'>>;
-  };
+export interface ITemp {
+  unit: ITempUnit;
+  setUnit: React.Dispatch<React.SetStateAction<'C' | 'F'>>;
 }
+
+export interface IHeight {
+  unit: IHeightUnit;
+  setUnit: React.Dispatch<React.SetStateAction<'mm' | 'Inches'>>;
+}
+

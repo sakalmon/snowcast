@@ -2,12 +2,16 @@ import { celsiusToF } from './TempUnitSelector';
 import { mmToInches } from './HeightUnitSelector';
 import snowIcon from '../assets/snow.png';
 import '../assets/stylesheets/Resort.scss'
-import type { IResortData, IUnits } from '../types/allTypes';
+import type { IResortData, ITempUnit, IHeightUnit } from '../types/allTypes';
 
 /*==============================================================================
   Functional Component
 ==============================================================================*/
-function Resort({ resort, units }: {resort: IResortData; units: IUnits}) {
+function Resort({ resort, tempUnit, heightUnit }: {
+  resort: IResortData;
+  tempUnit: ITempUnit;
+  heightUnit: IHeightUnit;
+}) {
   // Data to be displayed for each resort
   const resortName = resort.name;
   let snowToday: number | string = resort.forecast.snowToday;
@@ -19,13 +23,13 @@ function Resort({ resort, units }: {resort: IResortData; units: IUnits}) {
   let currentTemp;
   
   // Unit conversions
-  if (units.temp.tempUnit === 'C') {
+  if (tempUnit === 'C') {
     currentTemp = resort.forecast.currentTemp;
   } else {
     currentTemp = celsiusToF(resort.forecast.currentTemp);
   }
 
-  if (units.height.heightUnit === 'Inches') {
+  if (heightUnit === 'Inches') {
     snowToday = mmToInches(snowToday).toFixed(2);
     eightDaySnowFall = mmToInches(eightDaySnowFall).toFixed(2);
   }

@@ -32,17 +32,6 @@ function PopularResorts() {
   const [ tempUnit, setTempUnit ] = useState<'C' | 'F'>('C');
   const [ heightUnit, setHeightUnit ] = useState<'mm' | 'Inches'>('mm');
 
-  const units = {
-    temp: {
-      tempUnit,
-      setTempUnit
-    },
-    height: {
-      heightUnit,
-      setHeightUnit
-    }
-  };
-
   // Get the forecast of all of our popular resorts and store in state
   useEffect(() => {
     const resortObjs = createResorts();
@@ -68,14 +57,21 @@ function PopularResorts() {
     <div className="PopularResorts">
       <div className="transparent-layer">
         <div className="units">
-          <TempUnitSelector units={units} />
-          <HeightUnitSelector units={units} />
+          <TempUnitSelector unit={tempUnit} setUnit={setTempUnit} />
+          <HeightUnitSelector
+            unit={heightUnit}
+            setUnit={setHeightUnit}
+          />
         </div>
         <SearchBox />
         <div className="resorts-container">
           {(resorts.map((resort, index) => 
-            <Link key={index} to='/resort_forecast' state={{ resort }}>
-              <Resort resort={resort} units={units} />
+            <Link key={index} to='/resort_forecast' state={{ resort, tempUnit, heightUnit }}>
+              <Resort
+                resort={resort}
+                tempUnit={tempUnit}
+                heightUnit={heightUnit}
+              />
             </Link>
           ))}
         </div>
