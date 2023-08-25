@@ -4,9 +4,10 @@ import Resort from './Resort';
 import SearchBox from './SearchBox';
 import TempUnitSelector from './TempUnitSelector';
 import HeightUnitSelector from './HeightUnitSelector';
+import { useUnitContext } from '../UnitContext';
 import { SnowResort } from '../classes/SnowResort';
 import '../assets/stylesheets/PopularResorts.scss';
-import type { IResortData } from '../types/allTypes';
+import type { IUnitContext, IResortData } from '../types/allTypes';
 
 /*==============================================================================
   Function Definitions
@@ -27,10 +28,6 @@ export const getAllResortData = (resorts: SnowResort[]) => {
 function PopularResorts() {
   // Data for all of our resorts
   const [ resorts, setResorts ] = useState<IResortData[]>([]);
-
-  // For temperature and snowfall height conversions
-  const [ tempUnit, setTempUnit ] = useState<'C' | 'F'>('C');
-  const [ heightUnit, setHeightUnit ] = useState<'mm' | 'Inches'>('mm');
 
   // Get the forecast of all of our popular resorts and store in state
   useEffect(() => {
@@ -53,6 +50,13 @@ function PopularResorts() {
   /*============================================================================
     Component JSX
   ============================================================================*/
+
+  const { temp, height }  = useUnitContext() as IUnitContext;
+  const tempUnit = temp.unit;
+  const setTempUnit = temp.setUnit;
+  const heightUnit = height.unit;
+  const setHeightUnit = height.setUnit;
+
   return (
     <div className="PopularResorts">
       <div className="transparent-layer">

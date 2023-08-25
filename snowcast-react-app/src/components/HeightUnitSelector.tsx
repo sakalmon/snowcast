@@ -1,5 +1,5 @@
 import ToggleSwitch from './ToggleSwitch';
-import '../assets/stylesheets/HeightUnitSelector.scss';
+import '../assets/stylesheets/UnitSelector.scss';
 import type { IHeight } from '../types/allTypes';
 
 /*==============================================================================

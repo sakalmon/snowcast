@@ -1,5 +1,5 @@
 import ToggleSwitch from './ToggleSwitch';
-import '../assets/stylesheets/TempUnitSelector.scss';
+import '../assets/stylesheets/UnitSelector.scss';
 import type { ITemp } from '../types/allTypes';
 
 /*==============================================================================

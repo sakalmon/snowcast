@@ -122,3 +122,14 @@ export interface IHeight {
   setUnit: React.Dispatch<React.SetStateAction<'mm' | 'Inches'>>;
 }
 
+export interface IUnitContext {
+  temp: {
+    unit: 'C' | 'F';
+    setUnit: React.Dispatch<React.SetStateAction<'C' | 'F'>>;
+  };
+  height: {
+    unit: 'mm' | 'Inches';
+    setUnit: React.Dispatch<React.SetStateAction<'mm' | 'Inches'>>;
+  };
+}
+

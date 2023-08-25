@@ -1,4 +1,10 @@
-.HeightUnitSelector {
+.units {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.TempUnitSelector, .HeightUnitSelector {
   color: white;
   display: flex;
   justify-content: flex-start;
