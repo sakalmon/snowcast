@@ -14,8 +14,10 @@ function TempUnitSelector({ unit, setUnit }: ITemp) {
   const updateTempUnit = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
       setUnit('F');
+      console.log('unit: F')
     } else {
       setUnit('C');
+      console.log('unit: C')
     }
   }
 

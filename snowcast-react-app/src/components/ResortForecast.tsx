@@ -19,11 +19,7 @@ const getSnowingHours = (resort: IResortData) => {
 ==============================================================================*/
 function ResortForecast() {
   const location = useLocation();
-  const { resort, tempUnit, heightUnit }: {
-    resort: IResortData;
-    tempUnit: ITempUnit;
-    heightUnit: IHeightUnit;
-  } = location.state;
+  const { resort }: { resort: IResortData } = location.state;
 
   // Hours where snowfall occurs
   const snowingHours = getSnowingHours(resort);
@@ -31,9 +27,11 @@ function ResortForecast() {
   // Only display hourly snowfall if it will snow
   const willSnow = snowingHours.length > 0;
 
-  const unitContext = useUnitContext() as IUnitContext;
-  const setHeightUnit = unitContext.height.setUnit;
-  const setTempUnit = unitContext.temp.setUnit;
+  const { temp, height } = useUnitContext() as IUnitContext;
+  const tempUnit = temp.unit;
+  const setTempUnit = temp.setUnit;
+  const heightUnit = height.unit;
+  const setHeightUnit = height.setUnit;
   /*============================================================================
     Component JSX
   ============================================================================*/
